@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- Base Definition -->
+	<definition name="base.definition" template="/view/layout/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="jsDefault" value="" />
+		<put-attribute name="cssDefault" value="" />
+		<put-attribute name="header" value="/view/layout/header.jsp" />
+		<put-attribute name="screenname" value="" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="jsAdd" value="" />
+		<put-attribute name="cssAdd" value="" />
+		<put-attribute name="footer" value="/view/layout/footer.jsp" />
+	</definition>
+
+	<definition name="login" extends="base.definition">
+		<put-attribute name="title" value="Login" />
+		<put-attribute name="screenname" value="LOGIN" />
+		<put-attribute name="body" value="/view/login.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="acessdeneid" extends="base.definition">
+		<put-attribute name="title" value="Access denied!" />
+		<put-attribute name="screenname" value="Access denied" />
+		<put-attribute name="content" value="/view/403.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="pagenotfound" extends="base.definition">
+		<put-attribute name="title" value="Page not found!" />
+		<put-attribute name="screenname" value="Page note found" />
+		<put-attribute name="content" value="/view/403.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+		</put-list-attribute>
+	</definition>
+</tiles-definitions>
