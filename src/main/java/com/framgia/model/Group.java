@@ -14,6 +14,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class Group implements Serializable {
 	private Integer id;
+	private User userCreate;
 	private String name;
 	private String description;
 	private String note;
@@ -22,7 +23,6 @@ public class Group implements Serializable {
 	private Date dateStart;
 	private Date dateEnd;
 	private String deleteFlag;
-	private String userCreate;
 	private Date dateCreate;
 	private String userUpdate;
 	private Date dateUpdate;
@@ -33,10 +33,12 @@ public class Group implements Serializable {
 		super();
 	}
 
-	public Group(Integer id, String name, String description, String note, Integer type, Integer status, Date dateStart,
-	        Date dateEnd, String deleteFlag, String userCreate, Date dateCreate, String userUpdate, Date dateUpdate) {
+	public Group(Integer id, User userCreate, String name, String description, String note, Integer type,
+	        Integer status, Date dateStart, Date dateEnd, String deleteFlag, Date dateCreate, String userUpdate,
+	        Date dateUpdate, List<Image> image, List<User> user) {
 		super();
 		this.id = id;
+		this.userCreate = userCreate;
 		this.name = name;
 		this.description = description;
 		this.note = note;
@@ -45,10 +47,11 @@ public class Group implements Serializable {
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
 		this.deleteFlag = deleteFlag;
-		this.userCreate = userCreate;
 		this.dateCreate = dateCreate;
 		this.userUpdate = userUpdate;
 		this.dateUpdate = dateUpdate;
+		this.image = image;
+		this.user = user;
 	}
 
 	public void setImage(List<Image> image) {
@@ -61,6 +64,14 @@ public class Group implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public User getUserCreate() {
+		return userCreate;
+	}
+
+	public void setUserCreate(User userCreate) {
+		this.userCreate = userCreate;
 	}
 
 	public String getName() {
@@ -125,14 +136,6 @@ public class Group implements Serializable {
 
 	public void setDeleteFlag(String deleteFlag) {
 		this.deleteFlag = deleteFlag;
-	}
-
-	public String getUserCreate() {
-		return userCreate;
-	}
-
-	public void setUserCreate(String userCreate) {
-		this.userCreate = userCreate;
 	}
 
 	public Date getDateCreate() {

@@ -5,20 +5,21 @@
 
 <hibernate-mapping package="com.framgia.model">
 
-	<class name="Image" table="IMAGE">
-		<id name="id" column="ID" type="java.lang.Integer">
-			<generator class="identity" />
+	<class name="Image" table="Image">
+		<id name="id" column="ID">
+			<generator class="increment" />
 		</id>
 		<property name="url" column="URL" />
 		<property name="description" column="DESCRIPTION" />
 		<property name="title" column="TITLE" />
 
 		<many-to-one name="group" class="Group" fetch="select"
-			cascade="all" lazy="false">
+			cascade="all">
 			<column name="idGroup" not-null="true" />
 		</many-to-one>
 
-		<list name="vote" cascade="all" lazy="true" fetch="select">
+		<list name="vote" cascade="all" lazy="true" fetch="select"
+			inverse="true">
 			<key column="id" not-null="true" />
 			<list-index column="idx" />
 			<one-to-many class="Vote" />

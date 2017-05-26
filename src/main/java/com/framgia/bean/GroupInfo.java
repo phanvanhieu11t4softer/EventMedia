@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class GroupInfo {
 	private Integer id;
+	private UserInfo userCreate;
 	private String name;
 	private String description;
 	private String note;
@@ -20,7 +21,6 @@ public class GroupInfo {
 	private Date dateStart;
 	private Date dateEnd;
 	private String deleteFlag;
-	private String userCreate;
 	private Date dateCreate;
 	private String userUpdate;
 	private Date dateUpdate;
@@ -31,11 +31,12 @@ public class GroupInfo {
 		super();
 	}
 
-	public GroupInfo(Integer id, String name, String description, String note, Integer type, Integer status,
-	        Date dateStart, Date dateEnd, String deleteFlag, String userCreate, Date dateCreate, String userUpdate,
+	public GroupInfo(Integer id, UserInfo userCreate, String name, String description, String note, Integer type,
+	        Integer status, Date dateStart, Date dateEnd, String deleteFlag, Date dateCreate, String userUpdate,
 	        Date dateUpdate, List<ImageInfo> image, List<UserInfo> user) {
 		super();
 		this.id = id;
+		this.userCreate = userCreate;
 		this.name = name;
 		this.description = description;
 		this.note = note;
@@ -44,7 +45,6 @@ public class GroupInfo {
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
 		this.deleteFlag = deleteFlag;
-		this.userCreate = userCreate;
 		this.dateCreate = dateCreate;
 		this.userUpdate = userUpdate;
 		this.dateUpdate = dateUpdate;
@@ -58,6 +58,14 @@ public class GroupInfo {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public UserInfo getUserCreate() {
+		return userCreate;
+	}
+
+	public void setUserCreate(UserInfo userCreate) {
+		this.userCreate = userCreate;
 	}
 
 	public String getName() {
@@ -122,14 +130,6 @@ public class GroupInfo {
 
 	public void setDeleteFlag(String deleteFlag) {
 		this.deleteFlag = deleteFlag;
-	}
-
-	public String getUserCreate() {
-		return userCreate;
-	}
-
-	public void setUserCreate(String userCreate) {
-		this.userCreate = userCreate;
 	}
 
 	public Date getDateCreate() {
