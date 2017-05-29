@@ -15,9 +15,9 @@ public class ImageInfo {
 	private String url;
 	private String description;
 	private String title;
-	private UserInfo user;
 	private GroupInfo group;
 	private String deleteFlag;
+	private String userCreate;
 	private Date dateCreate;
 	private String userUpdate;
 	private Date dateUpdate;
@@ -27,16 +27,16 @@ public class ImageInfo {
 		super();
 	}
 
-	public ImageInfo(Integer id, String url, String description, String title, UserInfo user, GroupInfo group,
-	        String deleteFlag, Date dateCreate, String userUpdate, Date dateUpdate, List<VoteInfo> votes) {
+	public ImageInfo(Integer id, String url, String description, String title, GroupInfo group, String deleteFlag,
+	        String userCreate, Date dateCreate, String userUpdate, Date dateUpdate, List<VoteInfo> votes) {
 		super();
 		this.id = id;
 		this.url = url;
 		this.description = description;
 		this.title = title;
-		this.user = user;
 		this.group = group;
 		this.deleteFlag = deleteFlag;
+		this.userCreate = userCreate;
 		this.dateCreate = dateCreate;
 		this.userUpdate = userUpdate;
 		this.dateUpdate = dateUpdate;
@@ -75,14 +75,6 @@ public class ImageInfo {
 		this.title = title;
 	}
 
-	public UserInfo getUser() {
-		return user;
-	}
-
-	public void setUser(UserInfo user) {
-		this.user = user;
-	}
-
 	public GroupInfo getGroup() {
 		return group;
 	}
@@ -97,6 +89,14 @@ public class ImageInfo {
 
 	public void setDeleteFlag(String deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+
+	public String getUserCreate() {
+		return userCreate;
+	}
+
+	public void setUserCreate(String userCreate) {
+		this.userCreate = userCreate;
 	}
 
 	public Date getDateCreate() {

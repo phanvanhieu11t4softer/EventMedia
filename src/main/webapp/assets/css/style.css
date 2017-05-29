@@ -1672,12 +1672,12 @@ button.btnScrUser {
 
 .detail-borrowed-left {
 	float: left;
-	width: 30%;
+	width: 25%;
 }
 
 .detail-borrowed-right {
 	float: left;
-	width: 70%;
+	width: 75%;
 }
 .file {
 	visibility: hidden;

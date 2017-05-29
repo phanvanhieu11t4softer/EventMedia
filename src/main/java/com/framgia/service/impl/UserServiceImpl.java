@@ -36,9 +36,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserInfo findById(int id, boolean flagUpdate) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserInfo findById(Integer id, boolean flagUpdate) {
+		try {
+			return ConvetBeanAndModel.convertUserModelToBean(getUserDAO().findById(id, flagUpdate));
+		} catch (Exception e) {
+			logger.error("Group service _ findById", e);
+			return null;
+		}
 	}
 
 	@Override
@@ -114,4 +118,15 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return false;
 	}
 
+	@Override
+	public boolean updatetUser(UserInfo userInfo) throws ParseException {
+		try {
+			User user = ConvetBeanAndModel.convertUserBeanToModel(userInfo);
+			getUserDAO().update(user);
+			return true;
+		} catch (Exception e) {
+			logger.error("update user", e);
+		}
+		return false;
+	}
 }
