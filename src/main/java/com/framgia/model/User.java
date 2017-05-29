@@ -33,6 +33,12 @@ public class User implements Serializable {
 		super();
 	}
 
+	public User(Integer id, String password) {
+		super();
+		this.id = id;
+		this.password = password;
+	}
+
 	public User(Integer id, String username, String password, String name, String gender, String birthday, String phone,
 	        String email, String joinStatus, Group group, Permission permission, Image image, String deleteFlag,
 	        String userCreate, Date dateCreate, String userUpdate, Date dateUpdate) {

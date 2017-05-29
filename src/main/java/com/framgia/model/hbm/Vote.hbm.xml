@@ -5,13 +5,12 @@
 
 <hibernate-mapping package="com.framgia.model">
 
-	<class name="Vote" table="VOTE">
-		<id name="id" column="ID" type="java.lang.Integer">
-			<generator class="identity" />
+	<class name="Vote" table="Vote">
+		<id name="id" column="ID">
+			<generator class="increment" />
 		</id>
 
-		<many-to-one name="image" class="Image" fetch="select"
-			cascade="all" lazy="false">
+		<many-to-one name="image" class="Image" fetch="select" cascade="all">
 			<column name="idImage" not-null="true" />
 		</many-to-one>
 
