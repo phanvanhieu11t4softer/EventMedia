@@ -1,13 +1,18 @@
 package com.framgia.dao.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.LockMode;
 import org.hibernate.criterion.Restrictions;
 
+import com.framgia.bean.ConditionUserBean;
 import com.framgia.dao.AbstractDAO;
 import com.framgia.dao.UserDAO;
 import com.framgia.model.User;
 import com.framgia.util.Constants;
+import com.framgia.util.Helpers;
 
 /**
  * 
@@ -34,6 +39,37 @@ public class UserDAOImpl extends AbstractDAO<Integer, User> implements UserDAO {
 	public void create(User user) {
 		logger.info("UserDAO _ createUser");
 		saveOrUpdate(user);
-		
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findByConditon(ConditionUserBean conditionUserBean) {
+		logger.info("Search list user.");
+		Criteria criterion = getSession().createCriteria(User.class);
+		criterion.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
+		if (conditionUserBean.getUserName() != null) {
+			if (null != conditionUserBean.getUserName() && !Helpers.isEmpty(conditionUserBean.getUserName())) {
+				criterion.add(Restrictions.like("username", "%" + conditionUserBean.getUserName() + "%"));
+			}
+			if (conditionUserBean.getPermissioName() > 0) {
+				criterion.add(Restrictions.eq("permission.id", conditionUserBean.getPermissioName()));
+			}
+		}
+
+		return criterion.list();
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public User findById(Integer id, boolean isLock) {
+		logger.info("UserDAO _ findByUsername");
+		Criteria crit = getSession().createCriteria(User.class);
+		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
+		crit.add(Restrictions.eq("id", id));
+		if (isLock) {
+			crit.setLockMode(LockMode.UPGRADE);
+		}
+		return (User) crit.uniqueResult();
+	}
+
 }

@@ -8,8 +8,19 @@
 		<property name="target">
 			<bean class="com.framgia.service.impl.UserServiceImpl">
 				<property name="userDAO" ref="UserDAO"></property>
+				<property name="permissionDAO" ref="PermissionDAO"></property>
+				<property name="groupDAO" ref="GroupDAO"></property>
 			</bean>
 		</property>
 	</bean>
 
+	<bean id="ManageUserService" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="com.framgia.service.impl.ManageUserServiceImpl">
+				<property name="userDAO" ref="UserDAO"></property>
+				<property name="permissionDAO" ref="PermissionDAO"></property>
+				<property name="groupDAO" ref="GroupDAO"></property>
+			</bean>
+		</property>
+	</bean>
 </beans>

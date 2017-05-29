@@ -15,6 +15,7 @@
 		<property name="phone" column="PHONE" />
 		<property name="email" column="EMAIL" />
 		<property name="statusJoin" column="STATUSJOIN" />
+		<property name="idGroup" column="IDGROUP" />
 		<property name="deleteFlag" column="DELETEFLAG" />
 		<property name="userCreate" column="USERCREATE" />
 		<property name="dateCreate" column="DATECREATE" />
