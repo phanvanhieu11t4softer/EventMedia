@@ -44,4 +44,11 @@ public class LoginController {
 			throw e;
 		}
 	}
+	
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public ModelAndView adminPage() {
+		logger.info("Call page home Admin");
+
+		return new ModelAndView("homepageadmin");
+	}
 }

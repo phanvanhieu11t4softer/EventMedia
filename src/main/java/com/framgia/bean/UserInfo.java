@@ -18,7 +18,7 @@ public class UserInfo {
 	private String phone;
 	private String email;
 	private String statusJoin;
-	private GroupInfo group;
+	private Integer idGroup;
 	private PermissionInfo permission;
 	private ImageInfo image;
 	private String deleteFlag;
@@ -34,7 +34,7 @@ public class UserInfo {
 	
 
 	public UserInfo(Integer id, String username, String password, String name, String gender, String birthday,
-	        String phone, String email, String joinStatus, GroupInfo group, PermissionInfo permission, ImageInfo image,
+	        String phone, String email, String joinStatus, Integer idGroup, PermissionInfo permission, ImageInfo image,
 	        String deleteFlag, String userCreate, Date dateCreate, String userUpdate, Date dateUpdate) {
 		super();
 		this.id = id;
@@ -46,7 +46,7 @@ public class UserInfo {
 		this.phone = phone;
 		this.email = email;
 		this.statusJoin = joinStatus;
-		this.group = group;
+		this.idGroup = idGroup;
 		this.permission = permission;
 		this.image = image;
 		this.deleteFlag = deleteFlag;
@@ -130,12 +130,12 @@ public class UserInfo {
 		this.statusJoin = statusJoin;
 	}
 
-	public GroupInfo getGroup() {
-		return group;
+	public Integer getIdGroup() {
+		return idGroup;
 	}
 
-	public void setGroup(GroupInfo group) {
-		this.group = group;
+	public void setIdGroup(Integer idGroup) {
+		this.idGroup = idGroup;
 	}
 
 	public PermissionInfo getPermission() {

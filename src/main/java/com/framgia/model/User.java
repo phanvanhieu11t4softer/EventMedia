@@ -20,7 +20,7 @@ public class User implements Serializable {
 	private String phone;
 	private String email;
 	private String statusJoin;
-	private Group group;
+	private Integer idGroup;
 	private Permission permission;
 	private Image image;
 	private String deleteFlag;
@@ -33,14 +33,8 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(Integer id, String password) {
-		super();
-		this.id = id;
-		this.password = password;
-	}
-
 	public User(Integer id, String username, String password, String name, String gender, String birthday, String phone,
-	        String email, String joinStatus, Group group, Permission permission, Image image, String deleteFlag,
+	        String email, String joinStatus, Integer idGroup, Permission permission, Image image, String deleteFlag,
 	        String userCreate, Date dateCreate, String userUpdate, Date dateUpdate) {
 		super();
 		this.id = id;
@@ -52,7 +46,7 @@ public class User implements Serializable {
 		this.phone = phone;
 		this.email = email;
 		this.statusJoin = joinStatus;
-		this.group = group;
+		this.idGroup = idGroup;
 		this.permission = permission;
 		this.image = image;
 		this.deleteFlag = deleteFlag;
@@ -134,12 +128,12 @@ public class User implements Serializable {
 		this.statusJoin = joinStatus;
 	}
 
-	public Group getGroup() {
-		return group;
+	public Integer getIdGroup() {
+		return idGroup;
 	}
 
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setIdGroup(Integer idGroup) {
+		this.idGroup = idGroup;
 	}
 
 	public Permission getPermission() {

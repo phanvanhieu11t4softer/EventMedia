@@ -1,5 +1,7 @@
 package com.framgia.util;
 
+import java.util.List;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.framgia.security.CustomUserDetail;
@@ -35,4 +37,12 @@ public class Helpers {
 		}
 		return userDetail.getUsername();
 	}
+	
+	public static boolean isEmpty(String value) {
+        return value == null || value.equals("") || value.trim().equals("");
+    }
+	
+	public static boolean isEmpty(List value) {
+        return value == null || value.size() == 0;
+    }
 }

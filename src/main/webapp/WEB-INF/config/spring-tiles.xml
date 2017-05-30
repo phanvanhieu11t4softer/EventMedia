@@ -85,4 +85,63 @@
 			<add-attribute value="/assets/js/calendar/jquery-ui.css" />
 		</put-list-attribute>
 	</definition>
+	
+	<definition name="homepageadmin" extends="base.definition">
+		<put-attribute name="title" value="Home Page Admin!" />
+		<put-attribute name="screenname" value="Home Page Admin" />
+		<put-attribute name="menu" value="/view/admin/menu.jsp" />
+		<put-attribute name="body" value="/view/admin/homePage.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+		</put-list-attribute>
+	</definition>
+	
+	<definition name="manageuser" extends="base.definition">
+		<put-attribute name="title" value="Manager User" />
+		<put-attribute name="screenname" value="Manager User" />
+		<put-attribute name="body" value="/view/admin/manageUsers.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/css/dataTables.bootstrap.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+			<add-attribute value="/assets/js/dataTables.bootstrap.min.css" />
+			<add-attribute value="/assets/js/jquery.dataTables.min.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/bootstrap-datepicker.js" />
+			<add-attribute value="/assets/js/init.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.dataTables.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+		</put-list-attribute>
+		
+		<put-list-attribute name="jsAdd">
+			<add-attribute value="/assets/js/calendar/jquery-ui.js" />
+			<add-attribute value="/assets/js/customize-Admin/manageUser.js" />
+		</put-list-attribute>
+	</definition>
+	
+	<definition name="manageusedretail" extends="base.definition">
+		<put-attribute name="title" value="Detail User" />
+		<put-attribute name="screenname" value="Detail User" />
+		<put-attribute name="menu" value="/view/admin/menu.jsp" />
+		<put-attribute name="body" value="/view/admin/detailUser.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+		</put-list-attribute>
+	</definition>
 </tiles-definitions>
