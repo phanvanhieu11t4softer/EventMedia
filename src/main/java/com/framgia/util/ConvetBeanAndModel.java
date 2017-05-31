@@ -127,7 +127,7 @@ public class ConvetBeanAndModel {
 			if (group.getUser() != null) {
 				List<UserInfo> listUserInfo = new ArrayList<UserInfo>();
 				for (User item : group.getUser()) {
-					if (item != null) {
+					if (item != null && !item.getPermission().getId().equals(Constants.PERMISSION_CODE_MANAGER)) {
 						UserInfo userInfo = convertUserModelToBean(item);
 						listUserInfo.add(userInfo);
 					}

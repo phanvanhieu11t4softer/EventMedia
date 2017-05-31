@@ -1,5 +1,8 @@
 package com.framgia.service.impl;
 
+import java.text.ParseException;
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 
 import com.framgia.bean.GroupInfo;
@@ -74,6 +77,69 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 			logger.error("isUserExist", e);
 		}
 		return null;
+	}
+
+	@Override
+	public boolean updateGroup(GroupInfo groupInfo) throws ParseException {
+		try {
+			Group group = getGroupDAO().findById(groupInfo.getId(), true);
+
+			if (group == null)
+				return false;
+			String userUpdate = Helpers.getUsername();
+			Date dateUpdate = DateUtil.getDateNow();
+			group.setName(groupInfo.getName());
+			group.setDescription(groupInfo.getDescription());
+			group.setNote(groupInfo.getNote());
+			group.setDateStart(DateUtil.convertStringtoDate(groupInfo.getDateStart()));
+			group.setDateEnd(DateUtil.convertStringtoDate(groupInfo.getDateEnd()));
+			group.setType(Integer.parseInt(groupInfo.getType()));
+			group.setStatus(Integer.parseInt(groupInfo.getStatus()));
+			group.setDateUpdate(dateUpdate);
+			group.setUserUpdate(userUpdate);
+
+			if (Constants.GROUP_STATUS_CODE_INACTIVE.equals(groupInfo.getStatus())) {
+				if (!remoteUserInGroup(group, userUpdate, dateUpdate))
+					return false;
+			}
+
+			getGroupDAO().updateGroup(group);
+			return true;
+		} catch (Exception e) {
+			logger.error("update Group", e);
+		}
+		return false;
+	}
+
+	protected boolean remoteUserInGroup(Group group, String userUpdate, Date dateUpdate) {
+		try {
+			// remove all user in group: user.idGroup = null
+			for (User item : group.getUser()) {
+				if (item == null)
+					continue;
+
+				if (item.getPermission().getId().equals(Constants.PERMISSION_CODE_MANAGER))
+					continue;
+
+				User user = getUserDAO().findById(item.getId(), true);
+				user.setIdGroup(null);
+				user.setStatusJoin(Constants.STATUSJOIN_CODE_FREE);
+				user.setDateUpdate(dateUpdate);
+				user.setUserUpdate(userUpdate);
+
+				if (group.getType() == Integer.parseInt(Constants.GROUP_TYPE_CODE_PUBLIC)
+				        && !user.getUserCreate().equals(user.getUsername())) {
+					user.setDeleteFlag(Constants.DEL_FLG_DEL);
+				}
+
+				getUserDAO().update(user);
+			}
+
+			return true;
+		} catch (Exception e) {
+			logger.error("remove all user in group", e);
+		}
+		return false;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.framgia.controller;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,5 +78,18 @@ public class ManagerController {
 		}
 
 		return new ResponseEntity<GroupInfo>(group, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/manager/", method = RequestMethod.POST)
+	public ResponseEntity<Void> updateGroup(@ModelAttribute("group") GroupInfo group) {
+		try {
+			if (groupService.updateGroup(group)) {
+				return new ResponseEntity<Void>(HttpStatus.OK);
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			logger.error("Update group error: ", e);
+		}
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 }
