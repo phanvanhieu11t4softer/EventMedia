@@ -31,7 +31,7 @@
 			authentication-success-handler-ref="customizeRedirectSuccessHandler" />
 
 		<logout logout-success-url="/login?logout" delete-cookies="JSESSIONID" />
-		<csrf />
+		<csrf disabled="true"/>
 
 		<remember-me token-validity-seconds="1234569879"
 			remember-me-parameter="remember-me" />

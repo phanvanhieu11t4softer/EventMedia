@@ -2,6 +2,7 @@ package com.framgia.dao;
 
 import java.util.List;
 
+import com.framgia.bean.ConditionGroupBean;
 import com.framgia.model.Group;
 
 public interface GroupDAO {
@@ -13,4 +14,8 @@ public interface GroupDAO {
 	public Group create(Group group);
 
 	public List<Group> findByGroupType(Integer groupType);
+
+	public List<Group> findByConditon(ConditionGroupBean conditionGroupBean);
+
+	public Long getCountType(Integer type, Integer status, String deleteFlag);
 }

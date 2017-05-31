@@ -228,4 +228,74 @@
 			<add-attribute value="/assets/js/customize-Admin/statisticalUser.js" />
 		</put-list-attribute>
 	</definition>
+	
+	<!-- Admin - init management group -->
+	<definition name="managegroup" extends="base.definition">
+		<put-attribute name="title" value="Manager Group" />
+		<put-attribute name="screenname" value="Manager Group" />
+		<put-attribute name="body" value="/view/admin/manageGroup.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/css/dataTables.bootstrap.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+			<add-attribute value="/assets/js/dataTables.bootstrap.min.css" />
+			<add-attribute value="/assets/js/jquery.dataTables.min.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/bootstrap-datepicker.js" />
+			<add-attribute value="/assets/js/init.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.dataTables.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+		</put-list-attribute>
+		<put-list-attribute name="jsAdd">
+			<add-attribute value="/assets/js/calendar/jquery-ui.js" />
+			<add-attribute value="/assets/js/customize-Admin/manageGroup.js" />
+		</put-list-attribute>
+	</definition>
+	
+	<!-- Admin - detail group -->
+	<definition name="detailgroup" extends="base.definition">
+		<put-attribute name="title" value="Detail Group" />
+		<put-attribute name="screenname" value="Detail Group" />
+		<put-attribute name="menu" value="/view/admin/menu.jsp" />
+		<put-attribute name="body" value="/view/admin/detailGroup.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+		</put-list-attribute>
+	</definition>
+	
+	<!-- statictical Group -->
+	<definition name="staticticalgroup" extends="base.definition">
+		<put-attribute name="title" value="Statictical Group" />
+		<put-attribute name="screenname" value="Statictical Group" />
+		<put-attribute name="menu" value="/view/admin/menu.jsp" />
+		<put-attribute name="body" value="/view/admin/statisticalGroup.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/libs/jqplot/jquery.jqplot.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+			<add-attribute value="/assets/libs/jqplot/jquery.jqplot.min.js" />
+			<add-attribute value="/assets/libs/jqplot/jqplot.categoryAxisRenderer.js" />
+			<add-attribute value="/assets/libs/jqplot/jqplot.barRenderer.min.js" />
+		</put-list-attribute>
+
+		<put-list-attribute name="jsAdd">
+			<add-attribute value="/assets/js/calendar/jquery-ui.js" />
+			<add-attribute value="/assets/js/customize-Admin/statisticalGroup.js" />
+		</put-list-attribute>
+	</definition>
 </tiles-definitions>

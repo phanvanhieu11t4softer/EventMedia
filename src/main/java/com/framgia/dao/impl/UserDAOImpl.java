@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.LockMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.bean.ConditionUserBean;
@@ -78,15 +79,14 @@ public class UserDAOImpl extends AbstractDAO<Integer, User> implements UserDAO {
 		return (User) crit.uniqueResult();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public Integer getCountUser(Integer id) {
+	public Long getCountUser(Integer id) {
 
 		Criteria crit = getSession().createCriteria(User.class);
 		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
 		crit.add(Restrictions.eq("idGroup", id));
-		List<User> users = crit.list();
-		return users.size();
+		crit.setProjection(Projections.rowCount());
+		return (Long) crit.uniqueResult(); 
 
 	}
 

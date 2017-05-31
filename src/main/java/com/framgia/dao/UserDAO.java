@@ -17,5 +17,5 @@ public interface UserDAO {
 
 	public void update(User user);
 
-	public Integer getCountUser(Integer id);
+	public Long getCountUser(Integer id);
 }
