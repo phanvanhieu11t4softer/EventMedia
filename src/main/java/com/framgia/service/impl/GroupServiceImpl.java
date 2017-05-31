@@ -1,6 +1,5 @@
 package com.framgia.service.impl;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -80,7 +79,7 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 	}
 
 	@Override
-	public boolean updateGroup(GroupInfo groupInfo) throws ParseException {
+	public boolean updateGroup(GroupInfo groupInfo) {
 		try {
 			Group group = getGroupDAO().findById(groupInfo.getId(), true);
 
@@ -99,7 +98,7 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 			group.setUserUpdate(userUpdate);
 
 			if (Constants.GROUP_STATUS_CODE_INACTIVE.equals(groupInfo.getStatus())) {
-				if (!removeUserInGroup(group, userUpdate, dateUpdate))
+				if (!remoteUserInGroup(group, userUpdate, dateUpdate))
 					return false;
 			}
 
@@ -112,7 +111,7 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 	}
 
 	@Override
-	public boolean deleteLogicGroup(Integer id) throws ParseException {
+	public boolean deleteLogicGroup(Integer id) {
 		try {
 			Group group = getGroupDAO().findById(id, true);
 
@@ -124,9 +123,10 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 			group.setDateUpdate(dateUpdate);
 			group.setUserUpdate(userUpdate);
 
-			if (!removeUserInGroup(group, userUpdate, dateUpdate))
+			if (!remoteUserInGroup(group, userUpdate, dateUpdate))
 				return false;
 
+			getGroupDAO().updateGroup(group);
 			return true;
 		} catch (Exception e) {
 			logger.error("update Group _ Delete logic", e);
@@ -135,7 +135,7 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 		return false;
 	}
 
-	protected boolean removeUserInGroup(Group group, String userUpdate, Date dateUpdate) {
+	protected boolean remoteUserInGroup(Group group, String userUpdate, Date dateUpdate) {
 		try {
 
 			// remove all user in group: user.idGroup = null

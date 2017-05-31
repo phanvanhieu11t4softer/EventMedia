@@ -9,6 +9,11 @@
  -->
 
 <body onload='getGroup();'>
+	<label id="mgsRemoveImageSuccess" class="hidden_elem">
+		<spring:message code='remove_image_success' text='' /></label>
+	<label id="mgsRemoveImageError" class="hidden_elem">
+		<spring:message code='remove_image_fail' text='' /></label>
+
 	<label id="mgsUpdateGroupSuccess" class="hidden_elem">
 		<spring:message code='update_group_success' text='' /></label>
 	<label id="mgsUpdateGroupError" class="hidden_elem">
