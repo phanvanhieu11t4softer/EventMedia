@@ -19,8 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.framgia.bean.GroupInfo;
 import com.framgia.bean.UserInfo;
-import com.framgia.dao.impl.UserDAOImpl;
+import com.framgia.service.GroupService;
 import com.framgia.service.UserService;
 import com.framgia.util.Constants;
 import com.framgia.util.DateUtil;
@@ -33,10 +34,13 @@ import com.framgia.util.DateUtil;
  */
 @RestController
 public class UserController {
-	private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
+	private static final Logger logger = Logger.getLogger(UserController.class);
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	GroupService groupService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -69,7 +73,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register/isExitUsername", method = RequestMethod.GET)
-	public ResponseEntity<Void> isExitUsername(@RequestParam String username, UriComponentsBuilder ucBuilder) throws Exception {
+	public ResponseEntity<Void> isExitUsername(@RequestParam String username, UriComponentsBuilder ucBuilder)
+	        throws Exception {
 		UserInfo user = new UserInfo();
 		user.setUsername(username);
 		if (userService.isUserExist(user)) {
@@ -78,4 +83,28 @@ public class UserController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
+	// registe group
+	@RequestMapping(value = { "/user/registerGroup" }, method = RequestMethod.GET)
+	public ModelAndView initRegisterGroup() {
+		logger.info("Regiter Group page: INIT");
+
+		GroupInfo groupInfo = new GroupInfo();
+		groupInfo.setName("");
+		groupInfo.setDescription("");
+		groupInfo.setNote("");
+		groupInfo.setType(Constants.GROUP_TYPE_CODE_PRIVATE);
+		groupInfo.setDateStart(null);
+		groupInfo.setDateEnd(null);
+
+		return new ModelAndView("registerGroup", "group", groupInfo);
+	}
+
+	@RequestMapping(value = "/user/registerGroup", method = RequestMethod.POST)
+	public ResponseEntity<Void> registerGroup(@ModelAttribute("group") GroupInfo group)
+	        throws Exception {
+		boolean create = groupService.createGroup(group);
+		if (!create)
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
 }

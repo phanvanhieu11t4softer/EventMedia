@@ -18,8 +18,8 @@ public class GroupInfo {
 	private String note;
 	private Integer type;
 	private Integer status;
-	private Date dateStart;
-	private Date dateEnd;
+	private String dateStart;
+	private String dateEnd;
 	private String deleteFlag;
 	private Date dateCreate;
 	private String userUpdate;
@@ -32,7 +32,7 @@ public class GroupInfo {
 	}
 
 	public GroupInfo(Integer id, UserInfo userCreate, String name, String description, String note, Integer type,
-	        Integer status, Date dateStart, Date dateEnd, String deleteFlag, Date dateCreate, String userUpdate,
+	        Integer status, String dateStart, String dateEnd, String deleteFlag, Date dateCreate, String userUpdate,
 	        Date dateUpdate, List<ImageInfo> image, List<UserInfo> user) {
 		super();
 		this.id = id;
@@ -108,19 +108,19 @@ public class GroupInfo {
 		this.status = status;
 	}
 
-	public Date getDateStart() {
+	public String getDateStart() {
 		return dateStart;
 	}
 
-	public void setDateStart(Date dateStart) {
+	public void setDateStart(String dateStart) {
 		this.dateStart = dateStart;
 	}
 
-	public Date getDateEnd() {
+	public String getDateEnd() {
 		return dateEnd;
 	}
 
-	public void setDateEnd(Date dateEnd) {
+	public void setDateEnd(String dateEnd) {
 		this.dateEnd = dateEnd;
 	}
 

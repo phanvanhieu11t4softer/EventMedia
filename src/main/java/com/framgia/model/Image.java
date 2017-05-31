@@ -17,9 +17,9 @@ public class Image implements Serializable {
 	private String url;
 	private String description;
 	private String title;
-	private User user;
 	private Group group;
 	private String deleteFlag;
+	private String userCreate;
 	private Date dateCreate;
 	private String userUpdate;
 	private Date dateUpdate;
@@ -29,19 +29,20 @@ public class Image implements Serializable {
 		super();
 	}
 
-	public Image(Integer id, String url, String description, String title, User user, Group group, String deleteFlag,
-	        Date dateCreate, String userUpdate, Date dateUpdate) {
+	public Image(Integer id, String url, String description, String title, Group group, String deleteFlag,
+	        String userCreate, Date dateCreate, String userUpdate, Date dateUpdate, List<Vote> vote) {
 		super();
 		this.id = id;
 		this.url = url;
 		this.description = description;
 		this.title = title;
-		this.user = user;
 		this.group = group;
 		this.deleteFlag = deleteFlag;
+		this.userCreate = userCreate;
 		this.dateCreate = dateCreate;
 		this.userUpdate = userUpdate;
 		this.dateUpdate = dateUpdate;
+		this.vote = vote;
 	}
 
 	public Integer getId() {
@@ -76,14 +77,6 @@ public class Image implements Serializable {
 		this.title = title;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public Group getGroup() {
 		return group;
 	}
@@ -98,6 +91,14 @@ public class Image implements Serializable {
 
 	public void setDeleteFlag(String deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+
+	public String getUserCreate() {
+		return userCreate;
+	}
+
+	public void setUserCreate(String userCreate) {
+		this.userCreate = userCreate;
 	}
 
 	public Date getDateCreate() {
