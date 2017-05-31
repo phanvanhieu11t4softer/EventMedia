@@ -46,4 +46,14 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 		return false;
 	}
 
+	@Override
+	public ImageInfo getImageByUserCreate(String username, Integer idGroup) {
+		try {
+			return ConvetBeanAndModel.convertImageModelToBean(getImageDAO().getImageByUserCreate(username, idGroup));
+		} catch (Exception e) {
+			logger.error("get image by userCreate error", e);
+		}
+		return null;
+	}
+
 }

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.framgia.bean.GroupInfo;
+import com.framgia.bean.ImageInfo;
 import com.framgia.bean.UserInfo;
 import com.framgia.service.GroupService;
 import com.framgia.service.ImageService;
@@ -128,4 +129,27 @@ public class ManagerController {
 	public boolean racceptUserJoinGroup(@PathVariable("idGroup") int idGroup, @PathVariable("id") int id) {
 		return userService.acceptUserJoinGroup(id, idGroup);
 	}
+
+	@RequestMapping(value = "/manager/user/{id}", method = RequestMethod.GET)
+	public ModelAndView detailPage(@PathVariable("id") int id) {
+		logger.info("call service: get user and get list permission");
+
+		// get infor user
+		UserInfo user = userService.findById(id, false);
+
+		// render page detail user
+		ModelAndView mv = new ModelAndView("detailUserOfManagerPermission", "user", user);
+
+		if (user == null) {
+			mv.addObject("image", null);
+			return mv;
+		}
+
+		// get image
+		ImageInfo image = imageService.getImageByUserCreate(user.getUsername(), user.getIdGroup());
+		mv.addObject("image", image);
+
+		return mv;
+	}
+
 }

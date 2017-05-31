@@ -7,4 +7,7 @@ public interface ImageService extends BaseService {
 	public ImageInfo findById(Integer id, boolean flgUpdate);
 
 	public boolean removeImageInGroup(Integer id);
+
+	public ImageInfo getImageByUserCreate(String username, Integer idGroup);
+
 }
