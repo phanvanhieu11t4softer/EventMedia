@@ -1,6 +1,13 @@
 // init
 var frmName, frmDescription, frmDateStart, frmDateEnd, frmNote, frmStatus, frmType;
 
+// Go to top page
+function goTopPage() {
+	$('html,body').animate({
+		scrollTop : 0
+	}, 300);
+}
+
 function getGroup() {
 	$.ajax({
 	    url : "/EventMedia/manager/init",
@@ -13,7 +20,7 @@ function getGroup() {
 		    	$("#messageContainer").removeClass('hidden_elem');
 		    }
 	    	if (jqXHR.status == 200) {
-	    		
+
 	    		$("#divBtnEdit").removeClass('hidden_elem');
 	    		
 	    		// display section group info
@@ -83,25 +90,32 @@ function getGroup() {
 	                                        + data+"</a>";
 	                            },
 	                        }, { "mDataProp" : "name"
-
 	                        }, { "mDataProp" : "email"
-	                        }, { "mDataProp" : "gender"
 	                        }, { "mDataProp" : "phone"
-	                        }, { "mDataProp" : "birthday"
+	                        }, { "mDataProp" : "statusJoin"
 	                        }, { "mDataProp" : "id",
 	                        	"mRender": function(data, type, row) {
-	                        		 return "<button onclick='clickRemoveUser("+data+",this)'>" +
-	                        		 		"<img src='./assets/imgs/delete-record.png' style='height: 20px;'/>" +
+	                        		if (row.statusJoin == "Request") {
+	                        		 return "<button onclick='clickRejectUser("+data+","+$("#id").val()+",this)'>" +
+	                        		 		"<img src='./assets/imgs/reject.jpg' alt='Reject user' style='height: 20px;'/>" +
+	                        		 		"</button>" +
+	                        		 		"  <button onclick='clickAcceptUser("+data+","+$("#id").val()+",this)'>" +
+	                        		 		"<img src='./assets/imgs/accept.jpg' alt='Accept user' style='height: 20px;'/></button>";
+	                        		} else {
+	                        			 return "<button onclick='clickRemoveUser("+data+","+$("#id").val()+",this)'>" +
+	                        		 		"<img src='./assets/imgs/delete-record.png' alt='Remove user' style='height: 20px;'/>" +
 	                        		 		"</button>";
-	                            }
+	                        		}
+
+	                        	}
 	                        }],
 	                    responsive : true
 	                });
 	                $(".listMember").show();
-	    		} else {
-	    			 $(".listMember").hide();
-	    			if (data.status == 0) {
-	    				$(".listMember").show();
+				} else {
+					 $(".listMember").hide();
+					if (data.status == 0) {
+						$(".listMember").show();
 		    			$(".listMemberBody").html("<b>No member!</b>");
 	    			}
 	    		}
@@ -197,7 +211,9 @@ function clickBtnSave() {
 			success : function(data, textStatus, jqXHR) {
 				if (jqXHR.status == 200) {
 					isEditGroupForm(true);
+					
 					$('#message').html($("#mgsUpdateGroupSuccess").text());
+					
 					if ($('input[type=radio][name=status]:checked').val() == 1) {
 						getGroup();
 						$("#btnEdit").hide();
@@ -441,7 +457,39 @@ function clickRemoveImage(id, el) {
 				}
 			},
 			error : function(error) {
+				goTopPage();
 				$('#message').html($("#mgsRemoveImageError").text());
+			}
+		});
+	}
+}
+
+// REMOVE USER
+function clickRemoveUser(id, idGroup, el) {
+	if (confirm("Are you sure remove user throw out this group?") == true) {
+		$('#messageContainer').html('');
+		var formURL = "/EventMedia/manager/user/remove/"+idGroup+"/" + id;
+		$.ajax({
+			url : formURL,
+			type : "GET",
+			data : false,
+			dataType : 'json',
+			success : function(data) {
+				goTopPage();
+				if (data) {
+					// remove datatable
+					$('#dataTables-result').DataTable().row($(el).parents('tr')).remove().draw();
+	
+					// Message
+					$('#message').html($("#mgsRemoveUserSuccess").text());
+				}
+				else {
+					$('#message').html($("#mgsRemoveUserError").text());
+				}
+			},
+			error : function(error) {
+				goTopPage();
+				$('#message').html($("#mgsRemoveUserError").text());
 			}
 		});
 	}

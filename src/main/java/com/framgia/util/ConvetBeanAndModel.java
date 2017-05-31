@@ -69,7 +69,15 @@ public class ConvetBeanAndModel {
 			userInfo.setBirthday(user.getBirthday());
 			userInfo.setPhone(user.getPhone());
 			userInfo.setEmail(user.getEmail());
-			userInfo.setStatusJoin(user.getStatusJoin());
+			userInfo.setStatusJoin(Constants.STATUSJOIN_VALUE_FREE);
+
+			if (user.getStatusJoin().equals(Constants.STATUSJOIN_CODE_APPOVE))
+				userInfo.setStatusJoin(Constants.STATUSJOIN_VALUE_APPOVE);
+
+			if (user.getStatusJoin().equals(Constants.STATUSJOIN_CODE_REQUEST)) {
+				userInfo.setStatusJoin(Constants.STATUSJOIN_VALUE_REQUEST);
+			}
+
 			userInfo.setIdGroup(user.getIdGroup());
 			userInfo.setDeleteFlag(user.getDeleteFlag());
 			userInfo.setDateCreate(user.getDateCreate());
@@ -133,7 +141,6 @@ public class ConvetBeanAndModel {
 			if (group.getUser() != null) {
 				List<UserInfo> listUserInfo = new ArrayList<UserInfo>();
 				for (User item : group.getUser()) {
-
 					if (item == null)
 						continue;
 

@@ -51,12 +51,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean deleteuser(UserInfo userInfo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public CustomUserDetail findByUserName(String username) {
 		try {
 			User user = getUserDAO().findByUserName(username);
@@ -125,6 +119,28 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			return true;
 		} catch (Exception e) {
 			logger.error("update user", e);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean removeUser(Integer id, Integer idGroup) {
+
+		try {
+			User user = getUserDAO().findById(id, true);
+			if (!user.getIdGroup().equals(idGroup))
+				return false;
+
+			// update
+			user.setIdGroup(null);
+			user.setStatusJoin(Constants.STATUSJOIN_CODE_FREE);
+			user.setDateUpdate(DateUtil.getDateNow());
+			user.setUserUpdate(Helpers.getUsername());
+
+			getUserDAO().update(user);
+			return true;
+		} catch (Exception e) {
+			logger.error("remove user", e);
 		}
 		return false;
 	}

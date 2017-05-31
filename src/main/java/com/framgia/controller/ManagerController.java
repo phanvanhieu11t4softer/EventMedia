@@ -110,4 +110,11 @@ public class ManagerController {
 	public boolean removeImage(@PathVariable("id") int id) {
 		return imageService.removeImageInGroup(id);
 	}
+
+	@RequestMapping(value = "/manager/user/remove/{idGroup}/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean removeUser(@PathVariable("idGroup") int idGroup, @PathVariable("id") int id) {
+		return userService.removeUser(id, idGroup);
+	}
+
 }
