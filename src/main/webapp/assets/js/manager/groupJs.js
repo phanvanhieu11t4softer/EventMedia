@@ -1,4 +1,7 @@
-function getGroup() {
+
+
+
+window.onload = function() {
 	$.ajax({
 	    url : "/EventMedia/manager/init",
 	    type : "GET",
@@ -80,11 +83,7 @@ function getGroup() {
                     },
                     "aoColumns" : [
                     	{
-                            "mDataProp" : "title",
-                            "mRender" : function(data, type, row) {
-                                return "<a href='/EventMedia/manager/" + row.id + "'>"
-                                        + data+"</a>";
-                            },
+                            "mDataProp" : "title"
                         }, { "mDataProp" : "userCreate"
                         }, { "mDataProp" : "votes.length"
                         }, { "mDataProp" : "id",
@@ -96,12 +95,21 @@ function getGroup() {
                         }, 
                         { "mDataProp" : "url",
                         	"mRender": function(data, type, row) {
-	                       		return "<img src='"+data+"' style='height: 150px;'/>";
+	                       	return "<img src='"+data+"' style='height: 150px;'"
+	                            +" data-to='"+data+"'"
+	                             + " data-caption='Like: <b>"+row.votes.length +"</b><br>" +
+	                             		"<b>Title</b>: "+row.title +
+	                             "</b></u><br>Description: "+row.description+"' class='modallery'>";
                         	}
                         }],
                     responsive : true
                 });
-
+            	$(this).modallery({
+            	    title: "<b>"+data.name +"</b>",
+            	    navigate: true,
+            	    arrows: true,
+            	    keypress: true
+            	  });
 		    }
 	    	
 	    },

@@ -171,7 +171,7 @@
 		</put-list-attribute>
 	</definition>
 	
-	<!-- Register group -->
+	<!-- Init group -->
 	<definition name="initGroup" extends="base.definition">
 		<put-attribute name="title" value="Home manager" />
 		<put-attribute name="screenname" value="HOME MANAGER" />
@@ -182,6 +182,7 @@
 			<add-attribute value="/assets/css/style.css" />
 			<add-attribute value="/assets/js/dataTables.bootstrap.min.css" />
 			<add-attribute value="/assets/js/jquery.dataTables.min.css" />
+			<add-attribute value="/assets/css/bootstrap.modallery.min.css" />
 		</put-list-attribute>
 		<put-list-attribute name="jsDefault">
 			<add-attribute value="/assets/js/jquery.min.js" />
@@ -194,6 +195,7 @@
 		</put-list-attribute>
 		<put-list-attribute name="jsAdd">
 			<add-attribute value="/assets/js/calendar/jquery-ui.js" />
+			<add-attribute value="/assets/js/manager/bootstrap.modallery.min.js" />
 			<add-attribute value="/assets/js/manager/groupJs.js" />
 		</put-list-attribute>
 		<put-list-attribute name="cssAdd">
