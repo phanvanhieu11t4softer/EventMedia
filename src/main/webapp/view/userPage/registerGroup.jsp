@@ -34,7 +34,7 @@
 						<tr>
 							<th>Name</th>
 							<td>
-								<form:input path="name" name="name" id="name"
+								<form:textarea maxlength="50" path="name" name="name" id="name"
 										class="form-control css-required" placeholder="This is item required"
 										style="display: inline; width: 65%;" />
 							</td>
@@ -42,17 +42,15 @@
 						<tr>
 							<th>Description</th>
 
-							<td><form:input path="description" name="description" id="description"
+							<td><form:textarea maxlength="500" path="description" name="description" id="description"
 										class="form-control css-required" placeholder="This is item required"
 										style="display: inline; width: 65%;" />
 							</td>
 						</tr>
 						<tr>
 							<th>Note</th>
-							<td><form:input
-										path="note" name="note" id="note"
-										class="form-control"
-										placeholder="This is not item required"
+							<td><form:textarea maxlength="500" path="note" name="note" id="note"
+										class="form-control" placeholder="This is not item required"
 										style="display: inline; width: 65%;" />
 							</td>
 						</tr>
