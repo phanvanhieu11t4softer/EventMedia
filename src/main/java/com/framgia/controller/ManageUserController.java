@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.framgia.bean.ConditionUserBean;
 import com.framgia.bean.PermissionInfo;
+import com.framgia.bean.StatisticalInfo;
 import com.framgia.bean.UserInfo;
 import com.framgia.service.ManageUserService;
 import com.framgia.util.DateUtil;
@@ -87,6 +88,19 @@ public class ManageUserController {
 
 		return manageUserService.deleteUser(idUser, getUserName());
 
+	}
+
+	@RequestMapping(value = "/statictical", method = RequestMethod.GET)
+	public ModelAndView staticticalPage() {
+		logger.info("Call page statictical");
+
+		return new ModelAndView("statictical");
+	}
+
+	@RequestMapping(value = "/statictical/{groupType}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody StatisticalInfo getSales(@PathVariable("groupType") Integer groupType) {
+
+		return manageUserService.getStatisticalInfo(groupType);
 	}
 
 	public String getUserName() {

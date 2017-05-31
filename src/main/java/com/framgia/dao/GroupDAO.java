@@ -1,5 +1,7 @@
 package com.framgia.dao;
 
+import java.util.List;
+
 import com.framgia.model.Group;
 
 public interface GroupDAO {
@@ -9,4 +11,6 @@ public interface GroupDAO {
 	public void updateGroup(Group group);
 
 	public Group create(Group group);
+
+	public List<Group> findByGroupType(Integer groupType);
 }

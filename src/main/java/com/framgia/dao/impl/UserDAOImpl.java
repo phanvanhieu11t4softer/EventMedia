@@ -78,4 +78,16 @@ public class UserDAOImpl extends AbstractDAO<Integer, User> implements UserDAO {
 		return (User) crit.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Integer getCountUser(Integer id) {
+
+		Criteria crit = getSession().createCriteria(User.class);
+		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
+		crit.add(Restrictions.eq("idGroup", id));
+		List<User> users = crit.list();
+		return users.size();
+
+	}
+
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.framgia.bean.ConditionUserBean;
 import com.framgia.bean.PermissionInfo;
+import com.framgia.bean.StatisticalInfo;
 import com.framgia.bean.UserInfo;
 import com.framgia.dao.GroupDAO;
 import com.framgia.dao.PermissionDAO;
@@ -192,6 +193,36 @@ public class ManageUserServiceImpl extends BaseServiceImpl implements ManageUser
 			logger.error("Error delete logic User: ", e);
 		}
 		return false;
+	}
+
+	@Override
+	public StatisticalInfo getStatisticalInfo(Integer groupType) {
+		try {
+			List<String> nameGroup = new ArrayList<>();
+
+			List<Integer> numberUser = new ArrayList<>();
+
+			List<Group> groupList = groupDAO.findByGroupType(groupType);
+
+			if (groupList == null) {
+				return null;
+			}
+			for (Group group : groupList) {
+				nameGroup.add(group.getName());
+				numberUser.add(userDAO.getCountUser(group.getId()));
+			}
+			String nameTypeGroup;
+			if (groupType == 0) {
+				nameTypeGroup = Constants.GROUP_TYPE_VALUE_PRIVATE;
+			} else {
+				nameTypeGroup = Constants.GROUP_TYPE_VALUE_PUBLIC;
+			}
+
+			return new StatisticalInfo(nameTypeGroup, numberUser, nameGroup);
+		} catch (Exception e) {
+			logger.error("Exception at function getStatisticalInfo in ManageUserServiceImpl: ", e);
+		}
+		return null;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.framgia.dao.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.LockMode;
@@ -43,4 +45,14 @@ public class GroupDAOImpl extends AbstractDAO<Integer, Group> implements GroupDA
 		return group;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Group> findByGroupType(Integer groupType) {
+		Criteria crit = getSession().createCriteria(Group.class);
+		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
+
+		crit.add(Restrictions.eq("type", groupType));
+
+		return crit.list();
+	}
 }

@@ -11,7 +11,7 @@ import com.framgia.model.Permission;
  * @author vu.thi.tran.van@framgia.com
  */
 public interface PermissionDAO {
-	
+
 	// Search permission with status enable
 	List<Permission> findByDelFlg();
 
