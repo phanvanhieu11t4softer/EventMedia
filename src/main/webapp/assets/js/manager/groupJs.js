@@ -445,6 +445,7 @@ function clickRemoveImage(id, el) {
 			data : false,
 			dataType : 'json',
 			success : function(data) {
+				goTopPage();
 				if (data) {
 					// remove datatable
 					$('#dataTables-image').DataTable().row($(el).parents('tr')).remove().draw();
@@ -493,4 +494,75 @@ function clickRemoveUser(id, idGroup, el) {
 			}
 		});
 	}
+
+}
+//REJECT USER JOIN GROUP
+function clickRejectUser(id, idGroup, el) {
+	if (confirm("Are you sure reject user join your group?") == true) {
+		$('#messageContainer').html('');
+		var formURL = "/EventMedia/manager/user/reject/"+idGroup+"/" + id;
+		$.ajax({
+			url : formURL,
+			type : "GET",
+			data : false,
+			dataType : 'json',
+			success : function(data) {
+				if (data) {
+					
+					// Confirm to send mail: yes/no
+					if (confirm("You want to send a letter to notify users. Yes or No?") == true) {
+						window.location.href="mailto:"+$(el).parents('tr').find("td:eq(2)").text()+
+						 "?subject=Notification: Your request join group have REJECT&body=Dear "+$(el).parents('tr').find("td:eq(1)").text()+",%0D%0A";
+					}
+
+					// remove datatable
+					$('#dataTables-result').DataTable().row($(el).parents('tr')).remove().draw();
+				}
+				else {
+					goTopPage();
+					$('#message').html($("#mgsRejectUserError").text());
+				}
+			},
+			error : function(error) {
+				goTopPage();
+				$('#message').html($("#mgsRejectUserError").text());
+			}
+		});
+	}
+}
+
+
+//ACCEPT USER JOIN GROUP
+function clickAcceptUser(id, idGroup, el) {
+	$('#messageContainer').html('');
+	var formURL = "/EventMedia/manager/user/accept/"+idGroup+"/" + id;
+	$.ajax({
+		url : formURL,
+		type : "GET",
+		data : false,
+		dataType : 'json',
+		success : function(data) {
+			if (data) {
+				// Confirm to send mail: yes/no
+				if (confirm("You want to send a letter to notify users. Yes or No?") == true) {
+					window.location.href="mailto:"+$(el).parents('tr').find("td:eq(2)").text()+
+					 "?subject=Notification: Your request join group have accept&body=Dear "+$(el).parents('tr').find("td:eq(1)").text()+",%0D%0A";
+				}
+
+				// change value
+				$(el).parents('tr').find("td:eq(4)").text("Approve");
+				$(el).parents('tr').find("td:eq(5)").html("<button onclick='clickRemoveUser("+id+","+idGroup+",this)'>" +
+        		 		"<img src='./assets/imgs/delete-record.png' alt='Remove user' style='height: 20px;'/></button>");
+			}
+			else {
+				goTopPage();s
+				$('#message').html($("#mgsAcceptUserError").text());
+			}
+		},
+		error : function(error) {
+			goTopPage();
+			$('#message').html($("#mgsAcceptUserError").text());
+		}
+	});
+
 }

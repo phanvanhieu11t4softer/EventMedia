@@ -32,7 +32,7 @@
 			</bean>
 		</property>
 	</bean>
-	
+
 	<bean id="ManageGroupService" parent="transactionProxyTemplate">
 		<property name="target">
 			<bean class="com.framgia.service.impl.ManageGroupServiceImpl">

@@ -117,4 +117,15 @@ public class ManagerController {
 		return userService.removeUser(id, idGroup);
 	}
 
+	@RequestMapping(value = "/manager/user/reject/{idGroup}/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean rejectUserJoinGroup(@PathVariable("idGroup") int idGroup, @PathVariable("id") int id) {
+		return userService.removeUser(id, idGroup);
+	}
+
+	@RequestMapping(value = "/manager/user/accept/{idGroup}/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean racceptUserJoinGroup(@PathVariable("idGroup") int idGroup, @PathVariable("id") int id) {
+		return userService.acceptUserJoinGroup(id, idGroup);
+	}
 }
