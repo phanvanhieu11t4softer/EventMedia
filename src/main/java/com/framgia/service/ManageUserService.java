@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.framgia.bean.ConditionUserBean;
 import com.framgia.bean.PermissionInfo;
+import com.framgia.bean.StatisticalInfo;
 import com.framgia.bean.UserInfo;
 
 /**
@@ -13,7 +14,7 @@ import com.framgia.bean.UserInfo;
  * @author vu.thi.tran.van@framgia.com
  * 
  */
-public interface ManageUserService extends BaseService{
+public interface ManageUserService extends BaseService {
 
 	List<PermissionInfo> findByDelFlg();
 
@@ -22,5 +23,7 @@ public interface ManageUserService extends BaseService{
 	UserInfo findById(Integer id);
 
 	Boolean deleteUser(Integer idUser, String userName);
+
+	StatisticalInfo getStatisticalInfo(Integer groupType);
 
 }

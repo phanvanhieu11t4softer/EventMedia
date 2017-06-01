@@ -202,4 +202,30 @@
 			<add-attribute value="/assets/js/calendar/jquery-ui.css" />
 		</put-list-attribute>
 	</definition>
+	
+	<!-- statictical user -->
+	<definition name="statictical" extends="base.definition">
+		<put-attribute name="title" value="Statictical User" />
+		<put-attribute name="screenname" value="Statictical User" />
+		<put-attribute name="menu" value="/view/admin/menu.jsp" />
+		<put-attribute name="body" value="/view/admin/statisticalUser.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/libs/jqplot/jquery.jqplot.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+			<add-attribute value="/assets/libs/jqplot/jquery.jqplot.min.js" />
+			<add-attribute value="/assets/libs/jqplot/jqplot.categoryAxisRenderer.js" />
+			<add-attribute value="/assets/libs/jqplot/jqplot.barRenderer.min.js" />
+		</put-list-attribute>
+
+		<put-list-attribute name="jsAdd">
+			<add-attribute value="/assets/js/calendar/jquery-ui.js" />
+			<add-attribute value="/assets/js/customize-Admin/statisticalUser.js" />
+		</put-list-attribute>
+	</definition>
 </tiles-definitions>

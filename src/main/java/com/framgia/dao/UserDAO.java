@@ -16,4 +16,6 @@ public interface UserDAO {
 	public User findById(Integer id, boolean isLock);
 
 	public void update(User user);
+
+	public Integer getCountUser(Integer id);
 }

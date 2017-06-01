@@ -26,11 +26,11 @@ public class PermissionDAOImpl extends AbstractDAO<Integer, Permission> implemen
 	@Override
 	public List<Permission> findByDelFlg() {
 		logger.info("Search list permission.");
-		
+
 		Criteria criterion = getSession().createCriteria(Permission.class);
 		criterion.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
 		return criterion.list();
-		
+
 	}
-	
+
 }
