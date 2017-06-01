@@ -16,8 +16,8 @@ public class GroupInfo {
 	private String name;
 	private String description;
 	private String note;
-	private Integer type;
-	private Integer status;
+	private String type;
+	private String status;
 	private String dateStart;
 	private String dateEnd;
 	private String deleteFlag;
@@ -31,8 +31,8 @@ public class GroupInfo {
 		super();
 	}
 
-	public GroupInfo(Integer id, UserInfo userCreate, String name, String description, String note, Integer type,
-	        Integer status, String dateStart, String dateEnd, String deleteFlag, Date dateCreate, String userUpdate,
+	public GroupInfo(Integer id, UserInfo userCreate, String name, String description, String note, String type,
+	        String status, String dateStart, String dateEnd, String deleteFlag, Date dateCreate, String userUpdate,
 	        Date dateUpdate, List<ImageInfo> image, List<UserInfo> user) {
 		super();
 		this.id = id;
@@ -92,19 +92,19 @@ public class GroupInfo {
 		this.note = note;
 	}
 
-	public Integer getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(Integer type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

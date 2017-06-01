@@ -98,8 +98,8 @@ public class ConvetBeanAndModel {
 			groupInfo.setName(group.getName());
 			groupInfo.setDescription(group.getDescription());
 			groupInfo.setNote(group.getNote());
-			groupInfo.setType(group.getType());
-			groupInfo.setStatus(group.getStatus());
+			groupInfo.setType(group.getType().toString());
+			groupInfo.setStatus(group.getStatus().toString());
 			if (group.getDateStart() != null) {
 				groupInfo.setDateStart(DateUtil.convertDatetoString(group.getDateStart()));
 			}
@@ -149,8 +149,8 @@ public class ConvetBeanAndModel {
 			group.setName(groupInfo.getName());
 			group.setDescription(groupInfo.getDescription());
 			group.setNote(groupInfo.getNote());
-			group.setType(groupInfo.getType());
-			group.setStatus(groupInfo.getStatus());
+			group.setType(Integer.parseInt(groupInfo.getType()));
+			group.setStatus(Integer.parseInt(groupInfo.getStatus()));
 			group.setDateStart(DateUtil.convertStringtoDate(groupInfo.getDateStart()));
 			group.setDateEnd(DateUtil.convertStringtoDate(groupInfo.getDateEnd()));
 			group.setDeleteFlag(groupInfo.getDeleteFlag());

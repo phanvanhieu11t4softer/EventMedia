@@ -32,14 +32,14 @@ public interface Constants {
 	public static String PERMISSION_VALUE_USER = "User";
 
 	// Constant type of Group
-	public static Integer GROUP_TYPE_CODE_PRIVATE = 0;
-	public static Integer GROUP_TYPE_CODE_PUBLIC = 1;
+	public static String GROUP_TYPE_CODE_PRIVATE = "0";
+	public static String GROUP_TYPE_CODE_PUBLIC = "1";
 	public static String GROUP_TYPE_VALUE_PRIVATE = "Private";
 	public static String GROUP_TYPE_VALUE_PUBLIC = "Public";
 
 	// Constant status of Group
-	public static Integer GROUP_STATUS_CODE_ACTIVE = 0;
-	public static Integer GROUP_STATUS_CODE_INACTIVE = 1;
+	public static String GROUP_STATUS_CODE_ACTIVE = "0";
+	public static String GROUP_STATUS_CODE_INACTIVE = "1";
 	public static String GROUP_STATUS_VALUE_ACTIVE = "Active";
 	public static String GROUP_STATUS_VALUE_INACTIVE = "Inactive";
 }
