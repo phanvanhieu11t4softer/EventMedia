@@ -12,10 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.framgia.bean.GroupInfo;
 import com.framgia.bean.UserInfo;
@@ -91,5 +93,18 @@ public class ManagerController {
 			logger.error("Update group error: ", e);
 		}
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+
+	@RequestMapping(value = "/manager/{id}", method = RequestMethod.GET)
+	public RedirectView deleteLogicGroup(@PathVariable("id") int id) {
+		try {
+			if (groupService.deleteLogicGroup(id)) {
+				return new RedirectView("/EventMedia/logout");
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			logger.error("Delete logic group error: ", e);
+		}
+		return new RedirectView("error");
 	}
 }

@@ -9,18 +9,24 @@ function getGroup() {
 	    dataType : 'json',
 	    async : true,
 	    success : function(data, textStatus, jqXHR) {
-
 	    	if (jqXHR.status == 404) {
 		    	$("#messageContainer").removeClass('hidden_elem');
 		    }
 	    	if (jqXHR.status == 200) {
+	    		
+	    		$("#divBtnEdit").removeClass('hidden_elem');
+	    		
+	    		// display section group info
+	    		$(".infoGroup").show();
 
 	    		// hiden button edit when status of group is inactive
 	    		if (data.status == 0) {
-	    			$("#divBtnEdit").html(
-	    					"<input type='button' id='btnEdit' onclick='clickBtnEdit();' value='Edit' class='btn btn-default'>"
-	    					+"<input type='button' id='btnSave' onclick='clickBtnSave();' value='Save' class='btn btn-default hidden_elem'>"
-	    					+"  <input type='button' id='btnCancel' onclick='clickBtnCancel();' value='Cancel' class='btn btn-default hidden_elem'>");
+
+	    			$("#btnDelete").show();
+	    			$("#btnEdit").show();
+	    			$("#btnCancel").hide();
+	    			$("#btnSave").hide();
+	    			$("#btnDelete").attr("href", "/EventMedia/manager/"+data.id);
 	    			frmName = data.name;
 	    			frmDescription = data.description;
 	    			frmDateStart = data.dateStart;
@@ -28,6 +34,12 @@ function getGroup() {
 	    			frmNote = data.note;
 	    			frmStatus = data.status;
 	    			frmType = data.type;
+	    		} else {
+	    			$("#btnDelete").show();
+	    			$("#btnDelete").attr("href", "/EventMedia/manager/"+data.id);
+	    			$("#btnEdit").hide();
+	    			$("#btnCancel").hide();
+	    			$("#btnSave").hide();
 	    		}
 
 		    	// group info
@@ -41,6 +53,7 @@ function getGroup() {
 	    		$('#inactive').prop("checked", true);
 	    		if (data.status == 0) {
 	    			$('#active').prop("checked", true);
+	    			$(".listMember").hide();
 	    		}
 
 	    		$('#public').prop("checked", true);
@@ -50,10 +63,8 @@ function getGroup() {
 
 	    		// List member
 	    		if (data.user.length > 0) {
-		    		if ($.fn.DataTable
-		                    .isDataTable('#dataTables-result')) {
-		                $('#dataTables-result').DataTable()
-		                        .destroy();
+		    		if ($.fn.DataTable.isDataTable('#dataTables-result')) {
+		                $('#dataTables-result').DataTable().destroy();
 		            }
 	
 	                $('#dataTables-result').DataTable({
@@ -83,17 +94,21 @@ function getGroup() {
 	                        }],
 	                    responsive : true
 	                });
+	                $(".listMember").show();
 	    		} else {
-	    			if (data.status == 1) {
-	    				$(".listMember").addClass('hidden_elem');
-	    			}
+	    			 $(".listMember").hide();
+	    			if (data.status == 0) {
+	    				$(".listMember").show();
 		    			$(".listMemberBody").html("<b>No member!</b>");
+	    			}
 	    		}
 
 	    		// list image
-	    		if (data.image.length < 1) {
-	    			$(".listMemberBody").html("<b>No image!</b>");
-	    			$(".listMemberBody").child("div").addClass('hidden_elem');
+	    		if (data.image.length > 0) {
+	    			$(".listImage").show();
+	    		} else {
+	    			$(".listImageBody").html("<b>No image!</b>");
+	    			$(".listImage").show();
 	    		}
 	    		
 	    		if ($.fn.DataTable
@@ -142,7 +157,7 @@ function getGroup() {
 	    },
 	    error : function(jqXHR, textStatus, errorThrown) {
 	    	$("#messageContainer").removeClass('hidden_elem');
-	    	$(".manageUser").addClass('hidden_elem');
+	    	$(".manageUser").hide();
 	    }
 	});
 }
@@ -167,6 +182,7 @@ function clickBtnCancel() {
 }
 
 function clickBtnSave() {
+	
 	if ($("#EditGroupForm").valid()) {
 		var postData = $("#EditGroupForm").serializeArray();
 		var formURL = $("#EditGroupForm").attr("action");
@@ -179,11 +195,10 @@ function clickBtnSave() {
 			success : function(data, textStatus, jqXHR) {
 				if (jqXHR.status == 200) {
 					isEditGroupForm(true);
-					$('#messageUpdateFail').addClass('hidden_elem');
-					$('#messageUpdateSuccess').removeClass('hidden_elem');
+					$('#message').html($("#mgsUpdateGroupSuccess").text());
 					if ($('input[type=radio][name=status]:checked').val() == 1) {
 						getGroup();
-						$("#btnEdit").addClass('hidden_elem');
+						$("#btnEdit").hide();
 
 					} else {
 						frmName = $("#name").val();
@@ -195,18 +210,16 @@ function clickBtnSave() {
 	    			}
 				}
 				else {
-					$('#messageUpdateFail').removeClass('hidden_elem');
-					$('#messageUpdateSuccess').addClass('hidden_elem');
+					$('#message').html($("#mgsUpdateGroupError").text());
 				}
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				if (jqXHR.status == 200) {
 					isEditGroupForm(true);
-					$('#messageUpdateFail').addClass('hidden_elem');
-					$('#messageUpdateSuccess').removeClass('hidden_elem');
+					$('#message').html($("#mgsUpdateGroupSuccess").text());
 					if ($('input[type=radio][name=status]:checked').val() == 1) {
 						getGroup();
-						$("#btnEdit").addClass('hidden_elem');
+						$("#btnEdit").hide();
 
 					} else {
 						frmName = $("#name").val();
@@ -218,8 +231,7 @@ function clickBtnSave() {
 	    			}
 				}
 				else {
-					$('#messageUpdateFail').removeClass('hidden_elem');
-					$('#messageUpdateSuccess').addClass('hidden_elem');
+					$('#message').html($("#mgsUpdateGroupError").text());
 				}
 			}
 		});
@@ -378,9 +390,9 @@ function isEditGroupForm(flgUpdate) {
 	if (flgUpdate) {
 
 		// item button
-		$("#btnEdit").removeClass('hidden_elem');
-		$("#btnSave").addClass('hidden_elem');
-		$("#btnCancel").addClass('hidden_elem');
+		$("#btnEdit").show();
+		$("#btnSave").hide();
+		$("#btnCancel").hide();
 
 		$("#name").removeClass('css-required');
 		$("#description").removeClass('css-required');
@@ -392,9 +404,9 @@ function isEditGroupForm(flgUpdate) {
 		$("#dateStart-error").hide();
 		$("#dateEnd-error").hide();
 	} else {
-		$("#btnEdit").addClass('hidden_elem');
-		$("#btnSave").removeClass('hidden_elem');
-		$("#btnCancel").removeClass('hidden_elem');
+		$("#btnEdit").hide();
+		$("#btnSave").show();
+		$("#btnCancel").show();
 
 		$("#name").addClass('css-required');
 		$("#description").addClass('css-required');

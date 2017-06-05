@@ -99,7 +99,7 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 			group.setUserUpdate(userUpdate);
 
 			if (Constants.GROUP_STATUS_CODE_INACTIVE.equals(groupInfo.getStatus())) {
-				if (!remoteUserInGroup(group, userUpdate, dateUpdate))
+				if (!removeUserInGroup(group, userUpdate, dateUpdate))
 					return false;
 			}
 
@@ -111,14 +111,40 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 		return false;
 	}
 
-	protected boolean remoteUserInGroup(Group group, String userUpdate, Date dateUpdate) {
+	@Override
+	public boolean deleteLogicGroup(Integer id) throws ParseException {
 		try {
+			Group group = getGroupDAO().findById(id, true);
+
+			if (group == null)
+				return false;
+			String userUpdate = Helpers.getUsername();
+			Date dateUpdate = DateUtil.getDateNow();
+			group.setDeleteFlag(Constants.DEL_FLG_DEL);
+			group.setDateUpdate(dateUpdate);
+			group.setUserUpdate(userUpdate);
+
+			if (!removeUserInGroup(group, userUpdate, dateUpdate))
+				return false;
+
+			return true;
+		} catch (Exception e) {
+			logger.error("update Group _ Delete logic", e);
+		}
+
+		return false;
+	}
+
+	protected boolean removeUserInGroup(Group group, String userUpdate, Date dateUpdate) {
+		try {
+
 			// remove all user in group: user.idGroup = null
 			for (User item : group.getUser()) {
 				if (item == null)
 					continue;
 
-				if (item.getPermission().getId().equals(Constants.PERMISSION_CODE_MANAGER))
+				if (item.getPermission().getId().equals(Constants.PERMISSION_CODE_MANAGER)
+				        && group.getDeleteFlag().equals(Constants.DEL_FLG))
 					continue;
 
 				User user = getUserDAO().findById(item.getId(), true);
@@ -127,10 +153,8 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 				user.setDateUpdate(dateUpdate);
 				user.setUserUpdate(userUpdate);
 
-				if (group.getType() == Integer.parseInt(Constants.GROUP_TYPE_CODE_PUBLIC)
-				        && !user.getUserCreate().equals(user.getUsername())) {
-					user.setDeleteFlag(Constants.DEL_FLG_DEL);
-				}
+				if (group.getDeleteFlag() == Constants.DEL_FLG_DEL)
+					user.setPermission(new Permission(Constants.PERMISSION_CODE_USER));
 
 				getUserDAO().update(user);
 			}

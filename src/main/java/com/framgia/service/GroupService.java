@@ -10,4 +10,7 @@ public interface GroupService extends BaseService {
 	public boolean createGroup(GroupInfo groupInfo) throws Exception;
 
 	public boolean updateGroup(GroupInfo groupInfo) throws ParseException;
+
+	public boolean deleteLogicGroup(Integer id) throws ParseException;
+
 }

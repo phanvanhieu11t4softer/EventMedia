@@ -9,26 +9,33 @@
  -->
 
 <body onload='getGroup();'>
+	<label id="mgsUpdateGroupSuccess" class="hidden_elem">
+		<spring:message code='update_group_success' text='' /></label>
+	<label id="mgsUpdateGroupError" class="hidden_elem">
+		<spring:message code='update_group_fail' text='' /></label>
+		
+	<section class="bg_white clearfix messageError">
+		<div class="body clearfix mt20" id="message"></div>
+	</section>
+
 	<section class="bg_white clearfix messageError">
 		<div class="body clearfix mt20 hidden_elem" id="messageContainer">
 			<center><spring:message code='init_group' text='' /></center></div>
 	</section>
-	<section class="bg_white clearfix messageError">
-		<div class="body clearfix mt20 hidden_elem" id="messageUpdateSuccess">
-			<spring:message code='update_group_success' text='' /> </div>
-	</section>
-	<section class="bg_white clearfix messageError">
-		<div class="body clearfix mt20 hidden_elem" id="messageUpdateFail">
-			<spring:message code='update_group_fail' text='' /> </div>
-	</section>
-	<section class="bg_white clearfix manageUser">
+	
+	<section class="bg_white clearfix manageUser infoGroup">
 		<div class="body clearfix mt20">
 			<div class="panel panel-default">
 				<div class="panel-heading" style="height: 45px;">
 					<div class="head-left" style="float: left; with: 75%">
 						<h3 class="panel-title">Information group</h3>
 					</div>
-					<div id="divBtnEdit" class="head-right" style="float: right; with: 20%; margin-top: -4px;">
+					<div id="divBtnEdit" class="head-right hidden_elem" style="float: right; with: 20%; margin-top: -4px;">
+						<a id="btnDelete" href="#"><input type="button" value="Delete" class="btn btn-default"></a>
+						<input type="button" id="btnEdit" onclick="clickBtnEdit();" value="Edit" class="btn btn-default">
+						<input type="button" id="btnSave" onclick="clickBtnSave();" value="Save" class="btn btn-default">
+						<input type="button" id="btnCancel" onclick="clickBtnCancel();" value="Cancel" class="btn btn-default">
+						
 					</div>
 				</div>
 				<div class="panel-body">
@@ -103,6 +110,7 @@
 	</section>
 
 	<!-- List member -->
+
 	<section class="bg_white clearfix manageUser listMember">
 		<div class="body clearfix mt20">
 				<div class="panel panel-default">
@@ -138,7 +146,7 @@
 	
 	
 	<!-- List image -->
-	<section class="bg_white clearfix manageUser">
+	<section class="bg_white clearfix manageUser listImage">
 		<div class="body clearfix mt20">
 				<div class="panel panel-default">
 					<div class="panel-heading">List image</div>
