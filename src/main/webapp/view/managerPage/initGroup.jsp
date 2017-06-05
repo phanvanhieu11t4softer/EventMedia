@@ -11,7 +11,15 @@
 <body onload='getGroup();'>
 	<section class="bg_white clearfix messageError">
 		<div class="body clearfix mt20 hidden_elem" id="messageContainer">
-			<spring:message code='init_group' text='' /> </div>
+			<center><spring:message code='init_group' text='' /></center></div>
+	</section>
+	<section class="bg_white clearfix messageError">
+		<div class="body clearfix mt20 hidden_elem" id="messageUpdateSuccess">
+			<spring:message code='update_group_success' text='' /> </div>
+	</section>
+	<section class="bg_white clearfix messageError">
+		<div class="body clearfix mt20 hidden_elem" id="messageUpdateFail">
+			<spring:message code='update_group_fail' text='' /> </div>
 	</section>
 	<section class="bg_white clearfix manageUser">
 		<div class="body clearfix mt20">
@@ -20,23 +28,23 @@
 					<div class="head-left" style="float: left; with: 75%">
 						<h3 class="panel-title">Information group</h3>
 					</div>
-					<div class="head-right" style="float: right; with: 20%; margin-top: -4px;">
-						<input type="button" id="btnEdit" value="Edit" class="btn btn-default">
+					<div id="divBtnEdit" class="head-right" style="float: right; with: 20%; margin-top: -4px;">
 					</div>
 				</div>
 				<div class="panel-body">
 					<!-- Group Info -->
-					<spring:url value="/manager/updateGroup" var="groupActionUrl" />
-					<form:form id="EditGroupForm" class="form-horizontal" method="PUT"
+					<spring:url value="/manager/" var="groupActionUrl" />
+					<form:form id="EditGroupForm" class="form-horizontal" method="POST"
 						action="${groupActionUrl}" modelAttribute="group">
 						<form:input path="id" name="id" id="id" class="hidden_elem" />
+						<form:input path="deleteFlag" name="deleteFlag" id="deleteFlag" class="hidden_elem" />
 						<div class="form-group form-group-lg">
 							<div class="col-sm-12">
 								<div style="width: 12%; float: left;">
 									<label>Name</label>
 								</div>
 								<div style="width: 88%; float: left;">
-									<form:textarea path="name" name="name" id="name" class="form-control" style="display: inline; width: 100%;" disabled="true" />
+									<form:textarea maxlength="50" path="name" name="name" id="name" class="form-control" style="display: inline; width: 100%;" disabled="true" />
 								</div>
 							</div>
 							<div class="col-sm-12" style="padding: 5px"></div>
@@ -45,7 +53,7 @@
 									<label>Description</label>
 								</div>
 								<div style="width: 88%; float: left;">
-									<form:textarea path="description" name="description" id="description" class="form-control" style="display: inline; width: 100%;" disabled="true" />
+									<form:textarea maxlength="500" path="description" name="description" id="description" class="form-control" style="display: inline; width: 100%;" disabled="true" />
 								</div>
 							</div>
 							<div class="col-sm-12" style="padding: 5px"></div>
@@ -73,7 +81,7 @@
 									<label>Note</label>
 								</div>
 								<div class="detail-borrowed-right">
-									<form:textarea path="note" name="note" id="note" class="form-control" style="display: inline; width: 100%;" disabled="true" />
+									<form:textarea maxlength="500" path="note" name="note" id="note" class="form-control" style="display: inline; width: 100%;" disabled="true" />
 								</div>
 							</div>
 							<div class="col-sm-3">
@@ -95,12 +103,12 @@
 	</section>
 
 	<!-- List member -->
-	<section class="bg_white clearfix manageUser">
+	<section class="bg_white clearfix manageUser listMember">
 		<div class="body clearfix mt20">
 				<div class="panel panel-default">
 					<div class="panel-heading">List Member</div>
 					<!-- /.panel-heading -->
-					<div class="panel-body">
+					<div class="panel-body listMemberBody">
 						<div class="dataTable_wrapper">
 							<table class="table table-striped table-bordered table-hover"
 								id="dataTables-result" width="100%">
@@ -135,7 +143,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">List image</div>
 					<!-- /.panel-heading -->
-					<div class="panel-body">
+					<div class="panel-body listImageBody">
 						<div class="dataTable_wrapper">
 							<table class="table table-striped table-bordered table-hover"
 								id="dataTables-image" width="100%">
