@@ -247,4 +247,32 @@
 			<add-attribute value="/assets/js/jquery.validate.min.js" />
 		</put-list-attribute>
 	</definition>
+
+	<!-- Chat socket -->
+	<definition name="chat" extends="base.definition">
+		<put-attribute name="title" value="Chat" />
+		<put-attribute name="screenname" value="Chat" />
+		<put-attribute name="menu" value="/view/admin/menu.jsp" />
+		<put-attribute name="body" value="/view/chat/chatSocket.jsp" />
+		<put-list-attribute name="cssDefault">
+			<add-attribute value="/assets/css/bootstrap.min.css" />
+			<add-attribute value="/assets/css/dataTables.bootstrap.min.css" />
+			<add-attribute value="/assets/css/style.css" />
+			<add-attribute value="/assets/js/dataTables.bootstrap.min.css" />
+			<add-attribute value="/assets/js/jquery.dataTables.min.css" />
+		</put-list-attribute>
+		<put-list-attribute name="jsDefault">
+			<add-attribute value="/assets/js/jquery.min.js" />
+			<add-attribute value="/assets/js/bootstrap.min.js" />
+			<add-attribute value="/assets/js/jquery.validate.min.js" />
+			<add-attribute value="/assets/js/sockjs.js" />
+			<add-attribute value="/assets/js/sockjs.min.js" />
+			<add-attribute value="/assets/js/stomp.min.js" />
+		</put-list-attribute>
+
+		<put-list-attribute name="jsAdd">
+			<add-attribute value="/assets/js/calendar/jquery-ui.js" />
+			<add-attribute value="/assets/js/chat-client/chatSocket.js" />
+		</put-list-attribute>
+	</definition>
 </tiles-definitions>
