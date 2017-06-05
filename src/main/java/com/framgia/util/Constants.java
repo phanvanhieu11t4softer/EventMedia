@@ -42,4 +42,13 @@ public interface Constants {
 	public static String GROUP_STATUS_CODE_INACTIVE = "1";
 	public static String GROUP_STATUS_VALUE_ACTIVE = "Active";
 	public static String GROUP_STATUS_VALUE_INACTIVE = "Inactive";
+
+	public static String TYPE = "Type";
+	public static String STATUS = "Status";
+	public static String DELETE_FLAG = "Delete Flag";
+	public static String DELETED = "Deleted";
+	public static String NOT_DELETE = "Not Delete";
+	public static Integer DEFAULT_VALUE_0 = 0;
+	public static Integer DEFAULT_VALUE_1 = 1;
+
 }

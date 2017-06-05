@@ -8,10 +8,10 @@ import java.util.List;
 public class StatisticalInfo {
 
 	private String nameTypeGroup;
-	private List<Integer> numberUser;
+	private List<Long> numberUser;
 	private List<String> nameGroup;
 
-	public StatisticalInfo(String nameTypeGroup, List<Integer> numberUser, List<String> nameGroup) {
+	public StatisticalInfo(String nameTypeGroup, List<Long> numberUser, List<String> nameGroup) {
 		super();
 		this.nameTypeGroup = nameTypeGroup;
 		this.numberUser = numberUser;
@@ -26,11 +26,11 @@ public class StatisticalInfo {
 		this.nameTypeGroup = nameTypeGroup;
 	}
 
-	public List<Integer> getNumberUser() {
+	public List<Long> getNumberUser() {
 		return numberUser;
 	}
 
-	public void setNumberUser(List<Integer> numberUser) {
+	public void setNumberUser(List<Long> numberUser) {
 		this.numberUser = numberUser;
 	}
 

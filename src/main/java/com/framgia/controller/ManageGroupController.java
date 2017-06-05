@@ -21,86 +21,79 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.framgia.bean.ConditionUserBean;
-import com.framgia.bean.PermissionInfo;
+import com.framgia.bean.ConditionGroupBean;
+import com.framgia.bean.GroupInfo;
 import com.framgia.bean.StatisticalInfo;
-import com.framgia.bean.UserInfo;
-import com.framgia.service.ManageUserService;
+import com.framgia.service.ManageGroupService;
 import com.framgia.util.DateUtil;
 
 /**
  * ManagementUsersController.java
  * 
  * @version 18/04/2017
- * @author vu.thi.tran.van@framgia.com
+ * @author phan.van.hieu@framgia.com
  */
 @RestController
-public class ManageUserController {
+public class ManageGroupController {
 
 	// log
-	private static final Logger logger = Logger.getLogger(ManageUserController.class);
+	private static final Logger logger = Logger.getLogger(ManageGroupController.class);
 
 	@Autowired
-	ManageUserService manageUserService;
+	ManageGroupService manageGroupService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
 		webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(DateUtil.getSimpleDateFormat(), true));
 	}
 
-	@RequestMapping(value = "/manageUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/manageGroup", method = RequestMethod.GET)
 	public ModelAndView adminPage() {
-		logger.info("call service: get list permission");
 
-		// get value permission role for select box
-		List<PermissionInfo> permissionInfo = manageUserService.findByDelFlg();
-
-		return new ModelAndView("manageuser", "permissionInfo", permissionInfo);
+		return new ModelAndView("managegroup");
 	}
 
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public @ResponseBody List<com.framgia.bean.UserInfo> findByCondition(
-			@ModelAttribute("conditionSearch") ConditionUserBean conditionSearch,
+	@RequestMapping(value = "/searchgroup", method = RequestMethod.GET)
+	public @ResponseBody List<com.framgia.bean.GroupInfo> findByCondition(
+			@ModelAttribute("conditionSearchGroup") ConditionGroupBean conditionGroupBean,
 			RedirectAttributes redirectAttributes) {
-		logger.info("call service; get list user");
+		logger.info("call service; get list group");
 
-		List<com.framgia.bean.UserInfo> userInfo = manageUserService.findByUsersWithCondition(conditionSearch);
+		List<com.framgia.bean.GroupInfo> groupInfo = manageGroupService.findByGroupWithCondition(conditionGroupBean);
 
-		return userInfo;
+		return groupInfo;
 	}
 
-	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/detailgroup/{id}", method = RequestMethod.GET)
 	public ModelAndView detailPage(@PathVariable("id") Integer id) {
-		logger.info("call service: get user");
+		logger.info("call service: get group");
 
-		// get infor user
-		UserInfo user = manageUserService.findById(id);
+		// get infor group
+		GroupInfo groupInfo = manageGroupService.findById(id);
 
-		// render page detail user
-		ModelAndView mv = new ModelAndView("manageusedretail", "user", user);
-
-		return mv;
+		// render page detail group
+		return new ModelAndView("detailgroup", "groupInfo", groupInfo);
 	}
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public @ResponseBody Boolean delLogicUser(@PathVariable("id") int idUser) {
-		logger.info("call service: delete user" + idUser);
+	@RequestMapping(value = "/deletegroup/{id}", method = RequestMethod.PUT)
+	public @ResponseBody Boolean delLogicUser(@PathVariable("id") Integer id) {
+		logger.info("call service: delete group" + id);
 
-		return manageUserService.deleteUser(idUser, getUserName());
+		return manageGroupService.deleteGroup(id, getUserName());
 
 	}
 
-	@RequestMapping(value = "/statictical", method = RequestMethod.GET)
+	@RequestMapping(value = "/staticticalgroup", method = RequestMethod.GET)
 	public ModelAndView staticticalPage() {
-		logger.info("Call page statictical");
+		logger.info("Call page statictical group");
 
-		return new ModelAndView("statictical");
+		return new ModelAndView("staticticalgroup");
 	}
 
-	@RequestMapping(value = "/statictical/{groupType}", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody StatisticalInfo getSales(@PathVariable("groupType") Integer groupType) {
+	@RequestMapping(value = "/staticticalgroup/{typeStatictical}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody StatisticalInfo getSales(@PathVariable("typeStatictical") Integer typeStatictical) {
 
-		return manageUserService.getStatisticalInfo(groupType);
+		return manageGroupService.getStatisticalInfo(typeStatictical);
 	}
 
 	public String getUserName() {

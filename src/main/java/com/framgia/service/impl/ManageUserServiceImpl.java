@@ -200,7 +200,7 @@ public class ManageUserServiceImpl extends BaseServiceImpl implements ManageUser
 		try {
 			List<String> nameGroup = new ArrayList<>();
 
-			List<Integer> numberUser = new ArrayList<>();
+			List<Long> numberUser = new ArrayList<>();
 
 			List<Group> groupList = groupDAO.findByGroupType(groupType);
 

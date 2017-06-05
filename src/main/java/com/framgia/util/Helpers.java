@@ -37,12 +37,13 @@ public class Helpers {
 		}
 		return userDetail.getUsername();
 	}
-	
+
 	public static boolean isEmpty(String value) {
-        return value == null || value.equals("") || value.trim().equals("");
-    }
-	
+		return value == null || value.equals("") || value.trim().equals("");
+	}
+
 	public static boolean isEmpty(List value) {
-        return value == null || value.size() == 0;
-    }
+		return value == null || value.size() == 0;
+	}
+
 }

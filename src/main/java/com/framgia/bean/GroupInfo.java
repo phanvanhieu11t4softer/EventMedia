@@ -32,7 +32,7 @@ public class GroupInfo {
 	}
 
 	public GroupInfo(Integer id, UserInfo userCreate, String name, String description, String note, String type,
-	        String status, String dateStart, String dateEnd, String deleteFlag, Date dateCreate, String userUpdate,
+			String status, String dateStart, String dateEnd, String deleteFlag, Date dateCreate, String userUpdate,
 	        Date dateUpdate, List<ImageInfo> image, List<UserInfo> user) {
 		super();
 		this.id = id;
