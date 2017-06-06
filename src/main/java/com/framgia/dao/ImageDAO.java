@@ -13,3 +13,4 @@ public interface ImageDAO {
 	Long findByUserCreate(String username);
 
 }
+
