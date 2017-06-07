@@ -494,7 +494,6 @@ function clickRemoveUser(id, idGroup, el) {
 			}
 		});
 	}
-
 }
 //REJECT USER JOIN GROUP
 function clickRejectUser(id, idGroup, el) {
