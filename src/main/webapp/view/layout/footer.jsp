@@ -1,6 +1,6 @@
 <!--footer start-->
-<a href="#" id="back-top" title="Back to top"> <img
-	src="./assets/imgs/pagetop.png" alt="Back top page" />
+<a href="#" id="back-top" title="Back top page">
+	<img src="./assets/imgs/pagetop.png" alt="&uarr;" />
 </a>
 <footer>
 	<div id="footerbody">

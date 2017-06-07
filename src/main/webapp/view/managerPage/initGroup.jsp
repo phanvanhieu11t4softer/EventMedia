@@ -50,7 +50,6 @@
 						<input type="button" id="btnEdit" onclick="clickBtnEdit();" value="Edit" class="btn btn-default">
 						<input type="button" id="btnSave" onclick="clickBtnSave();" value="Save" class="btn btn-default">
 						<input type="button" id="btnCancel" onclick="clickBtnCancel();" value="Cancel" class="btn btn-default">
-
 					</div>
 				</div>
 				<div class="panel-body">

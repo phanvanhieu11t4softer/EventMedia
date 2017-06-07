@@ -35,4 +35,16 @@ public class ImageDAOImpl extends AbstractDAO<Integer, Image> implements ImageDA
 		saveOrUpdate(image);
 	}
 
+	@Override
+	public Image getImageByUserCreate(String userCreate, Integer idGroup) {
+		logger.info("Search group to update");
+		Criteria crit = getSession().createCriteria(Image.class);
+		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
+		crit.add(Restrictions.eq("userCreate", userCreate));
+		crit.createCriteria("group", "group");
+		crit.add(Restrictions.eq("group.id", idGroup));
+
+		return (Image) crit.uniqueResult();
+	}
+
 }

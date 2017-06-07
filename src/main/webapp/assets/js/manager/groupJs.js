@@ -86,7 +86,7 @@ function getGroup() {
 	                    	{
 	                            "mDataProp" : "username",
 	                            "mRender" : function(data, type, row) {
-	                                return "<a href='/EventMedia/manager/" + row.id + "'>"
+	                                return "<a target='_blank' href='/EventMedia/manager/user/" + row.id + "'>"
 	                                        + data+"</a>";
 	                            },
 	                        }, { "mDataProp" : "name"

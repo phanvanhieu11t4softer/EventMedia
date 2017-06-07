@@ -7,4 +7,7 @@ public interface ImageDAO {
 	public Image findById(Integer id, boolean isLock);
 
 	public void update(Image image);
+
+	public Image getImageByUserCreate(String username, Integer idGroup);
+
 }

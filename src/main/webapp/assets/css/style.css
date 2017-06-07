@@ -1754,3 +1754,7 @@ font-size: 18px;
 #back-top.show {
     opacity: 1;
 }
+
+.panel-body-image {
+	padding-top: 15px;
+}
