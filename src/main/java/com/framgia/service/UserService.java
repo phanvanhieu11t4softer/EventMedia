@@ -21,4 +21,6 @@ public interface UserService extends BaseService {
 	boolean updatetUser(UserInfo userInfo);
 
 	boolean removeUser(Integer id, Integer idGroup);
+
+	boolean acceptUserJoinGroup(Integer id, Integer idGroup);
 }

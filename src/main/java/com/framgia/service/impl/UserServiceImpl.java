@@ -144,4 +144,26 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean acceptUserJoinGroup(Integer id, Integer idGroup) {
+
+		try {
+			User user = getUserDAO().findById(id, true);
+			if (!user.getIdGroup().equals(idGroup))
+				return false;
+
+			// update
+			user.setStatusJoin(Constants.STATUSJOIN_CODE_APPOVE);
+			user.setDateUpdate(DateUtil.getDateNow());
+			user.setUserUpdate(Helpers.getUsername());
+
+			getUserDAO().update(user);
+			return true;
+		} catch (Exception e) {
+			logger.error("remove user", e);
+		}
+		return false;
+	}
+
 }

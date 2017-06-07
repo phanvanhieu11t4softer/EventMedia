@@ -8,6 +8,12 @@
  * 26/05/2017
  -->
 <body onload='getGroup();'>
+	<label id="mgsRejectUserError" class="hidden_elem">
+		<spring:message code='reject_user_fail' text='' /></label>
+
+	<label id="mgsAcceptUserError" class="hidden_elem">
+		<spring:message code='accept_user_fail' text='' /></label>
+
 	<label id="mgsRemoveUserSuccess" class="hidden_elem">
 		<spring:message code='remove_user_success' text='' /></label>
 	<label id="mgsRemoveUserError" class="hidden_elem">
@@ -31,7 +37,7 @@
 		<div class="body clearfix mt20 hidden_elem" id="messageContainer">
 			<center><spring:message code='init_group' text='' /></center></div>
 	</section>
-	
+
 	<section class="bg_white clearfix manageUser infoGroup">
 		<div class="body clearfix mt20">
 			<div class="panel panel-default">
@@ -44,7 +50,7 @@
 						<input type="button" id="btnEdit" onclick="clickBtnEdit();" value="Edit" class="btn btn-default">
 						<input type="button" id="btnSave" onclick="clickBtnSave();" value="Save" class="btn btn-default">
 						<input type="button" id="btnCancel" onclick="clickBtnCancel();" value="Cancel" class="btn btn-default">
-						
+
 					</div>
 				</div>
 				<div class="panel-body">
@@ -119,7 +125,6 @@
 	</section>
 
 	<!-- List member -->
-
 	<section class="bg_white clearfix manageUser listMember">
 		<div class="body clearfix mt20">
 				<div class="panel panel-default">
