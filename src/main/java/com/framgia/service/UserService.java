@@ -16,9 +16,9 @@ public interface UserService extends BaseService {
 
 	public boolean addUser(UserInfo userInfo);
 
-	public boolean deleteuser(UserInfo userInfo);
-
 	public boolean isUserExist(UserInfo user);
 
 	boolean updatetUser(UserInfo userInfo);
+
+	boolean removeUser(Integer id, Integer idGroup);
 }

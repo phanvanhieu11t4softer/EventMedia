@@ -7,8 +7,12 @@
  * vu.thi.tran.van@framgia.com
  * 26/05/2017
  -->
-
 <body onload='getGroup();'>
+	<label id="mgsRemoveUserSuccess" class="hidden_elem">
+		<spring:message code='remove_user_success' text='' /></label>
+	<label id="mgsRemoveUserError" class="hidden_elem">
+		<spring:message code='remove_user_fail' text='' /></label>
+
 	<label id="mgsRemoveImageSuccess" class="hidden_elem">
 		<spring:message code='remove_image_success' text='' /></label>
 	<label id="mgsRemoveImageError" class="hidden_elem">
@@ -119,7 +123,14 @@
 	<section class="bg_white clearfix manageUser listMember">
 		<div class="body clearfix mt20">
 				<div class="panel panel-default">
-					<div class="panel-heading">List Member</div>
+					<div class="panel-heading" style="height: 45px;">
+						<div class="head-left" style="float: left; with: 75%">
+							<h3 class="panel-title">List Member</h3>
+						</div>
+						<div id="divBtnEdit" class="head-right" style="float: right; with: 20%; margin-top: -4px;">
+						</div>
+					</div>
+
 					<!-- /.panel-heading -->
 					<div class="panel-body listMemberBody">
 						<div class="dataTable_wrapper">
@@ -130,9 +141,8 @@
 										<th>Username</th>
 										<th>Name</th>
 										<th>Email</th>
-										<th>Sex</th>
 										<th>Phone</th>
-										<th>Birthday</th>
+										<th>Status</th>
 										<th>Remove</th>
 									</tr>
 								</thead>
