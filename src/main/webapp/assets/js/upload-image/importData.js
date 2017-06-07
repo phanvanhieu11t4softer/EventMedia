@@ -30,7 +30,6 @@ function checkEmpty(str) {
 	return false;
 }
 $('#btnImport').on("click", function(e) {
-	e.preventDefault();
 	var fileImport = $("#fileImport").val();
 	var fileName = $("#fileName").val();
 	

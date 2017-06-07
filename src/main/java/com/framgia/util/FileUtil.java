@@ -11,7 +11,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.framgia.service.impl.FileUploadServiceImpl;
 
-public interface FileUtil {
+public class FileUtil {
 
 	static final Logger logger = Logger.getLogger(FileUploadServiceImpl.class);
 

@@ -9,36 +9,26 @@
 			<div class="alert alert-success">
 				<p id="err_data" style="color: red">${err_data}</p>
 				<div class="alert alert-danger alert-dismissable" id="formAlert">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">&times;</button>
 					<strong><spring:message code='error' /></strong>
 					<spring:message code='required_fileUpload' />
 				</div>
 				<div class="alert alert-danger alert-dismissable"
 					id="formAlertImage">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">&times;</button>
 					<strong><spring:message code='error' /></strong>
 					<spring:message code='error_format' />
 				</div>
 				<div class="alert alert-danger alert-dismissable"
 					id="formAlertError">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">&times;</button>
 					<strong><spring:message code='error' /></strong>
 					<spring:message code='title_max_length' />
 				</div>
 				<div class="alert alert-danger alert-dismissable"
 					id="formAlertErrorDes">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">&times;</button>
 					<strong><spring:message code='error' /></strong>
 					<spring:message code='des_max_length' />
 				</div>
 				<div class="alert alert-danger alert-dismissable"
 					id="formAlertEmpty">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">&times;</button>
 					<strong><spring:message code='error' /></strong>
 					<spring:message code='fill_empty' />
 				</div>
@@ -58,7 +48,7 @@
 								<th>Title <font class="red">*</font>
 								</th>
 								<td><input class="form-control" id="title" name="title"
-									type="text" placeholder="please input text" required></td>
+									type="text" placeholder="please input text"></td>
 							</tr>
 							<tr>
 								<th>Import Image <font class="red">*</font>
@@ -82,7 +72,7 @@
 							<tr>
 								<th>Description <font class="red">*</font>
 								</th>
-								<td><textarea rows="10" cols="100" required
+								<td><textarea rows="10" cols="100"
 										class="form-control" id="description" name="description"
 										placeholder="please input text"></textarea></td>
 							</tr>
@@ -92,7 +82,7 @@
 				<div id="sub_btn">
 					<a href="/EventMedia/user" class="btn btn-detail"><input
 						type="button" value="BACK HOME" class="btn-forwardscreen"></a>
-					<input type="submit" value="UPLOAD IMAGE" class="btn-forwardscreen"
+					<input type="button" value="UPLOAD IMAGE" class="btn-forwardscreen"
 						id="btnImport">
 				</div>
 			</form>
