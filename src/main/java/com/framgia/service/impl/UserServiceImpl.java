@@ -1,6 +1,5 @@
 package com.framgia.service.impl;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +80,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean addUser(UserInfo userInfo) throws ParseException {
+	public boolean addUser(UserInfo userInfo) {
 		try {
 			if (StringUtils.isBlank(Helpers.getUsername())) {
 
@@ -119,7 +118,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean updatetUser(UserInfo userInfo) throws ParseException {
+	public boolean updatetUser(UserInfo userInfo) {
 		try {
 			User user = ConvetBeanAndModel.convertUserBeanToModel(userInfo);
 			getUserDAO().update(user);

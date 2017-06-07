@@ -27,6 +27,7 @@ function getGroup() {
 	    			$("#btnCancel").hide();
 	    			$("#btnSave").hide();
 	    			$("#btnDelete").attr("href", "/EventMedia/manager/"+data.id);
+
 	    			frmName = data.name;
 	    			frmDescription = data.description;
 	    			frmDateStart = data.dateStart;
@@ -40,6 +41,7 @@ function getGroup() {
 	    			$("#btnEdit").hide();
 	    			$("#btnCancel").hide();
 	    			$("#btnSave").hide();
+
 	    		}
 
 		    	// group info
@@ -81,10 +83,11 @@ function getGroup() {
 	                                        + data+"</a>";
 	                            },
 	                        }, { "mDataProp" : "name"
-	                        }, { "mDataProp" : "birthday"
+
 	                        }, { "mDataProp" : "email"
 	                        }, { "mDataProp" : "gender"
 	                        }, { "mDataProp" : "phone"
+	                        }, { "mDataProp" : "birthday"
 	                        }, { "mDataProp" : "id",
 	                        	"mRender": function(data, type, row) {
 	                        		 return "<button onclick='clickRemoveUser("+data+",this)'>" +
@@ -182,7 +185,6 @@ function clickBtnCancel() {
 }
 
 function clickBtnSave() {
-	
 	if ($("#EditGroupForm").valid()) {
 		var postData = $("#EditGroupForm").serializeArray();
 		var formURL = $("#EditGroupForm").attr("action");
@@ -199,6 +201,7 @@ function clickBtnSave() {
 					if ($('input[type=radio][name=status]:checked').val() == 1) {
 						getGroup();
 						$("#btnEdit").hide();
+
 
 					} else {
 						frmName = $("#name").val();
@@ -393,7 +396,6 @@ function isEditGroupForm(flgUpdate) {
 		$("#btnEdit").show();
 		$("#btnSave").hide();
 		$("#btnCancel").hide();
-
 		$("#name").removeClass('css-required');
 		$("#description").removeClass('css-required');
 		$("#dateStart").removeClass('css-required');
@@ -412,5 +414,35 @@ function isEditGroupForm(flgUpdate) {
 		$("#description").addClass('css-required');
 		$("#dateStart").addClass('css-required');
 		$("#dateEnd").addClass('css-required');
+	}
+}
+
+// REMOVE IMAGE
+function clickRemoveImage(id, el) {
+	if (confirm("Are you sure delete record?") == true) {
+		$('#messageContainer').html('');
+		
+		var formURL = "/EventMedia/manager/image/" + id;
+		$.ajax({
+			url : formURL,
+			type : "GET",
+			data : false,
+			dataType : 'json',
+			success : function(data) {
+				if (data) {
+					// remove datatable
+					$('#dataTables-image').DataTable().row($(el).parents('tr')).remove().draw();
+
+					// Message
+					$('#message').html($("#mgsRemoveImageSuccess").text());
+				}
+				else {
+					$('#message').html($("#mgsRemoveImageError").text());
+				}
+			},
+			error : function(error) {
+				$('#message').html($("#mgsRemoveImageError").text());
+			}
+		});
 	}
 }

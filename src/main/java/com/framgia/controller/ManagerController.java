@@ -1,6 +1,5 @@
 package com.framgia.controller;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -22,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.framgia.bean.GroupInfo;
 import com.framgia.bean.UserInfo;
 import com.framgia.service.GroupService;
+import com.framgia.service.ImageService;
 import com.framgia.service.UserService;
 import com.framgia.util.Constants;
 import com.framgia.util.DateUtil;
@@ -43,6 +44,9 @@ public class ManagerController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	ImageService imageService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -84,27 +88,26 @@ public class ManagerController {
 
 	@RequestMapping(value = "/manager/", method = RequestMethod.POST)
 	public ResponseEntity<Void> updateGroup(@ModelAttribute("group") GroupInfo group) {
-		try {
-			if (groupService.updateGroup(group)) {
-				return new ResponseEntity<Void>(HttpStatus.OK);
-			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			logger.error("Update group error: ", e);
+
+		if (groupService.updateGroup(group)) {
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
+
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
 	@RequestMapping(value = "/manager/{id}", method = RequestMethod.GET)
 	public RedirectView deleteLogicGroup(@PathVariable("id") int id) {
-		try {
-			if (groupService.deleteLogicGroup(id)) {
-				return new RedirectView("/EventMedia/logout");
-			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			logger.error("Delete logic group error: ", e);
+
+		if (groupService.deleteLogicGroup(id)) {
+			return new RedirectView("/EventMedia/logout");
 		}
 		return new RedirectView("error");
+	}
+
+	@RequestMapping(value = "/manager/image/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean removeImage(@PathVariable("id") int id) {
+		return imageService.removeImageInGroup(id);
 	}
 }
