@@ -1,5 +1,7 @@
 package com.framgia.service;
 
+import java.util.List;
+
 import com.framgia.bean.ImageInfo;
 
 public interface ImageService extends BaseService {
@@ -10,4 +12,7 @@ public interface ImageService extends BaseService {
 
 	public ImageInfo getImageByUserCreate(String username, Integer idGroup);
 
+	public List<ImageInfo> getListImage(String condition, int page);
+
+	public Integer getNoOfRecord(String condition);
 }

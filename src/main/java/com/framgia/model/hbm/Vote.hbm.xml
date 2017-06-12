@@ -14,7 +14,9 @@
 			<column name="idImage" not-null="true" />
 		</many-to-one>
 
-		<one-to-one name="user" class="User" cascade="save-update" />
+		<many-to-one name="user" class="User" fetch="select">
+			<column name="idUser" />
+		</many-to-one>
 
 		<property name="deleteFlag" column="DELETEFLAG" />
 		<property name="dateCreate" column="DATECREATE" />

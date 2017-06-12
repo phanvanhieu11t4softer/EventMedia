@@ -1,8 +1,12 @@
 package com.framgia.dao.impl;
 
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.LockMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -47,7 +51,8 @@ public class ImageDAOImpl extends AbstractDAO<Integer, Image> implements ImageDA
 		crit.add(Restrictions.eq("group.id", idGroup));
 
 		return (Image) crit.uniqueResult();
-}
+
+	}
 
 	public Long findByUserCreate(String username) {
 		logger.info("Search group to update");
@@ -58,6 +63,42 @@ public class ImageDAOImpl extends AbstractDAO<Integer, Image> implements ImageDA
 
 		crit.setProjection(Projections.rowCount());
 		return (Long) crit.uniqueResult();
+
+	}
+
+	@Override
+	public List<Image> getListImage(String condition, int first, int max) {
+
+		Criteria crit = getSession().createCriteria(Image.class);
+		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
+		crit.createCriteria("group", "group");
+		crit.add(Restrictions.gt("group.id", 0));
+		crit.add(Restrictions.eq("group.type", Integer.parseInt(Constants.GROUP_TYPE_CODE_PUBLIC)));
+		if (StringUtils.isNotEmpty(condition)) {
+			crit.add(Restrictions.or(Restrictions.like("title", "%" + condition + "%"),
+			        Restrictions.like("group.name", "%" + condition + "%")));
+		}
+		crit.addOrder(Order.desc("dateCreate"));
+		crit.setFirstResult(first);
+		crit.setMaxResults(max);
+
+		return crit.list();
+	}
+
+	@Override
+	public Integer getNoOfRecord(String condition) {
+		Criteria crit = getSession().createCriteria(Image.class);
+		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
+		crit.createCriteria("group", "group");
+		crit.add(Restrictions.gt("group.id", 0));
+		crit.add(Restrictions.eq("group.type", Integer.parseInt(Constants.GROUP_TYPE_CODE_PUBLIC)));
+		if (StringUtils.isNotEmpty(condition)) {
+			crit.add(Restrictions.or(Restrictions.like("title", "%" + condition + "%"),
+			        Restrictions.like("group.name", "%" + condition + "%")));
+		}
+		crit.setProjection(Projections.rowCount());
+		Long noOfRecord = (Long) crit.uniqueResult();
+		return Integer.parseInt(noOfRecord.toString());
 	}
 
 	@Override
