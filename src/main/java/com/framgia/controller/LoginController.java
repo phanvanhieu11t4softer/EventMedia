@@ -26,7 +26,7 @@ public class LoginController {
 	@Autowired
 	MessageSource messageSource;
 
-	@RequestMapping(value = { "/login", "/" }, method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginPage() {
 		return new ModelAndView("login");
 	}
@@ -44,7 +44,7 @@ public class LoginController {
 			throw e;
 		}
 	}
-	
+
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public ModelAndView adminPage() {
 		logger.info("Call page home Admin");

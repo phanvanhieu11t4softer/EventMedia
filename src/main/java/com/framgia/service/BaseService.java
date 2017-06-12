@@ -6,6 +6,7 @@ import com.framgia.dao.GroupDAO;
 import com.framgia.dao.ImageDAO;
 import com.framgia.dao.PermissionDAO;
 import com.framgia.dao.UserDAO;
+import com.framgia.dao.VoteDAO;
 
 /**
  * 
@@ -19,4 +20,5 @@ public interface BaseService extends Serializable {
 	PermissionDAO getPermissionDAO();
 	GroupDAO getGroupDAO();
 	ImageDAO getImageDAO();
+	VoteDAO getVoteDAO();
 }

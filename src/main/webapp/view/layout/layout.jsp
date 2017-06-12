@@ -52,9 +52,15 @@
 						<p class="pull-right">
 							${pageContext.request.userPrincipal.name} | <input
 								class="btn-forwardscreen" name="submit" type="submit"
-								value="Logout"">
+								value="Logout">
 						</p>
 					</form:form>
+				</c:if>
+				<c:if test="${empty pageContext.request.userPrincipal.name}">
+					<p class="pull-right" onclick="location.href = '/EventMedia/login';"><input
+								class="btn-forwardscreen"  type="button"
+								value="Login">
+						</p>
 				</c:if>
 			</div>
 		</div>

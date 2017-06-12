@@ -1,5 +1,6 @@
 package com.framgia.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import com.framgia.bean.ImageInfo;
@@ -15,4 +16,8 @@ public interface ImageService extends BaseService {
 	public List<ImageInfo> getListImage(String condition, int page);
 
 	public Integer getNoOfRecord(String condition);
+
+	boolean addVote(Integer idImage, Integer idUser) throws ParseException;
+
+	boolean remoteVote(Integer id, Integer idUser);
 }

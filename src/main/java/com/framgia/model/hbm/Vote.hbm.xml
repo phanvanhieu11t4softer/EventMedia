@@ -10,7 +10,7 @@
 			<generator class="increment" />
 		</id>
 
-		<many-to-one name="image" class="Image" fetch="select" cascade="all">
+		<many-to-one name="image" class="Image" fetch="select">
 			<column name="idImage" not-null="true" />
 		</many-to-one>
 

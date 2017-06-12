@@ -1,5 +1,6 @@
 package com.framgia.service.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import com.framgia.bean.GroupInfo;
 import com.framgia.bean.ImageInfo;
 import com.framgia.model.Group;
 import com.framgia.model.Image;
+import com.framgia.model.User;
+import com.framgia.model.Vote;
 import com.framgia.service.ImageService;
 import com.framgia.util.Constants;
 import com.framgia.util.ConvetBeanAndModel;
@@ -93,6 +96,39 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	@Override
 	public Integer getNoOfRecord(String condition) {
 		return getImageDAO().getNoOfRecord(condition);
+	}
+
+	@Override
+	public boolean remoteVote(Integer idImage, Integer idUser) {
+		try {
+			Vote vote = getVoteDAO().findVoteToDelete(idImage, idUser);
+			getVoteDAO().deleteVote(vote);
+			return true;
+		} catch (Exception e) {
+			logger.error("remove vote error", e);
+			throw e;
+		}
+	}
+
+	@Override
+	public boolean addVote(Integer idImage, Integer idUser) throws ParseException {
+		try {
+			Vote vote = new Vote();
+			Image image = new Image();
+			image.setId(idImage);
+			vote.setImage(image);
+			vote.setUser(new User(idUser));
+			vote.setDeleteFlag(Constants.DEL_FLG);
+			vote.setDateUpdate(DateUtil.getDateNow());
+			vote.setDateCreate(DateUtil.getDateNow());
+			vote.setUserUpdate(Helpers.getUsername());
+
+			getVoteDAO().create(vote);
+			return true;
+		} catch (ParseException e) {
+			logger.error("add vote error", e);
+			throw e;
+		}
 	}
 
 }

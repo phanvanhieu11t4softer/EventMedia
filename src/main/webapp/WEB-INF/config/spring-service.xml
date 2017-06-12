@@ -47,6 +47,7 @@
 		<property name="target">
 			<bean class="com.framgia.service.impl.ImageServiceImpl">
 				<property name="imageDAO" ref="ImageDAO"></property>
+				<property name="voteDAO" ref="VoteDAO"></property>
 			</bean>
 		</property>
 	</bean>
