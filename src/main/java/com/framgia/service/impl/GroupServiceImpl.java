@@ -1,13 +1,18 @@
 package com.framgia.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.framgia.bean.DataHighChart;
 import com.framgia.bean.GroupInfo;
 import com.framgia.model.Group;
+import com.framgia.model.Image;
 import com.framgia.model.Permission;
 import com.framgia.model.User;
+import com.framgia.model.Vote;
 import com.framgia.security.CustomUserDetail;
 import com.framgia.service.GroupService;
 import com.framgia.util.Constants;
@@ -164,6 +169,30 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 			logger.error("remove all user in group", e);
 		}
 		return false;
+	}
+	
+	@Override
+	public DataHighChart getDataForHighchart(Integer idGroup) {
+		Group group = getGroupDAO().findById(idGroup, false);
+		if (group == null) {
+			return null;
+		}
+
+		List<String> content = new ArrayList<String>();
+		for (Image item : group.getImage()) {
+			if (item == null)
+				continue;
+			int count = 0;
+			for (Vote vote : item.getVote()) {
+				if (vote != null) {
+					count++;
+				}
+			}
+			content.add(item.getUserCreate() + "," + count);
+		}
+
+		return new DataHighChart(String.valueOf(content.size()), content);
+
 	}
 
 }

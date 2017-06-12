@@ -29,7 +29,6 @@ function getGroup() {
 	    		// hiden button edit when status of group is inactive
 	    		if (data.status == 0) {
 
-	    			$("#btnDelete").show();
 	    			$("#btnEdit").show();
 	    			$("#btnCancel").hide();
 	    			$("#btnSave").hide();
@@ -43,12 +42,16 @@ function getGroup() {
 	    			frmStatus = data.status;
 	    			frmType = data.type;
 	    		} else {
-	    			$("#btnDelete").show();
 	    			$("#btnDelete").attr("href", "/EventMedia/manager/"+data.id);
 	    			$("#btnEdit").hide();
 	    			$("#btnCancel").hide();
 	    			$("#btnSave").hide();
 
+	    		}
+
+	    		if (data.image.length > 0) {
+	    			$("#btnStatistical").attr("href", "/EventMedia/manager/"+data.id+"/chart");
+	    			$("#btnStatistical").show();
 	    		}
 
 		    	// group info

@@ -152,4 +152,11 @@ public class ManagerController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/manager/{id}/chart", method = RequestMethod.GET)
+	public ModelAndView getDataForStatistical(@PathVariable("id") Integer id) {
+
+		return new ModelAndView("statisticalImageForGroup", "highchart",
+		        groupService.getDataForHighchart(id));
+	}
+
 }
