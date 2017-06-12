@@ -34,13 +34,43 @@
 
 						<div class="panel-body">
 
+							<div class="alert alert-success">
+								<p id="err_data" style="color: red">${err_data}</p>
+								<div class="alert alert-danger alert-dismissable" id="formAlert">
+									<strong><spring:message code='error' /></strong>
+									<spring:message code='required_fileUpload' />
+								</div>
+								<div class="alert alert-danger alert-dismissable"
+									id="formAlertImage">
+									<strong><spring:message code='error' /></strong>
+									<spring:message code='error_format' />
+								</div>
+								<div class="alert alert-danger alert-dismissable"
+									id="formAlertError">
+									<strong><spring:message code='error' /></strong>
+									<spring:message code='title_max_length' />
+								</div>
+								<div class="alert alert-danger alert-dismissable"
+									id="formAlertErrorDes">
+									<strong><spring:message code='error' /></strong>
+									<spring:message code='des_max_length' />
+								</div>
+								<div class="alert alert-danger alert-dismissable"
+									id="formAlertEmpty">
+									<strong><spring:message code='error' /></strong>
+									<spring:message code='fill_empty' />
+								</div>
+								<p id="success" style="color: green">${success}</p>
+								<p id="fail" style="color: green">${fail}</p>
+							</div>
 							<table class="table-bordered profile_regist">
 								<tr>
 									<th>Group</th>
 									<td><label>${imageInfo.group.name}</label></td>
 								</tr>
 								<tr>
-									<th>Title</th>
+									<th>Title <span class="editForm hidden_elem"> <font
+											class="red">*</font></span></th>
 
 									<td><span id="lbltitle" class="lableForm"><label>${imageInfo.title}</label></span>
 										<span class="editForm hidden_elem"> <input name="title"
@@ -51,18 +81,22 @@
 									</span></td>
 								</tr>
 								<tr>
-									<th>Image</th>
+									<th>Image <span class="editForm hidden_elem"> <font
+											class="red">*</font></span></th>
 									<td><span id="lblurl" class="lableForm"><img
-											alt="TransformedImage" src='${imageInfo.url}' /></span><span
+											alt="TransformedImage" src='${imageInfo.url}' /></span> <input
+										name="url" id="url" class="hidden_elem"
+										value="${imageInfo.url}" /> <span
 										class="editForm hidden_elem">
 											<div class="form-inline">
 												<input type="file" id="fileImport" name="fileImport"
 													class="file" />
 												<div class="input-group col-xs-12">
-													<input type="text" id="fileName" name="fileName"
-														value="${imageInfo.url}" class="form-control" disabled
+													<input id="fileName" name="fileName"
+														value="${imageInfo.url}" class="form-control css-required"
 														placeholder="" /> <span class="input-group-btn">
-														<button class="browse btn btn-primary" type="button">
+														<button class="browse btn btn-primary" id="choose"
+															type="button">
 															<i class="glyphicon glyphicon-search"></i> Choose File
 														</button>
 													</span>
@@ -71,14 +105,15 @@
 									</span></td>
 								</tr>
 								<tr>
-									<th>Description</th>
+									<th>Description <span class="editForm hidden_elem">
+											<font class="red">*</font>
+									</span></th>
 									<td><span id="lbldescription" class="lableForm"><label>${imageInfo.description}</label></span>
-										<span class="editForm hidden_elem"> <input
-											name="description" id="description"
-											value="${imageInfo.description}"
-											class="form-control css-required"
-											placeholder="This is item required"
-											style="display: inline; width: 65%;" />
+										<span class="editForm hidden_elem"> <textarea
+												name="description" id="description" rows="10" cols="100"
+												class="form-control css-required"
+												placeholder="This is item required"
+												style="display: inline; width: 65%;">${imageInfo.description}</textarea>
 									</span></td>
 								</tr>
 							</table>
@@ -88,10 +123,25 @@
 				</div>
 				<div class="clearfix"></div>
 				<div id="sub_btn">
-					<a href="/SpringSecurity/home"><input type="button"
-						value="Back home" class="btn-forwardscreen"></a>
+					<a href="/EventMedia/user"><input type="button"
+						value="Back home" class="btn-forwardscreen"></a> <a
+						href="/EventMedia/deleteImage/${imageInfo.id}"
+						onclick="return confirm('<spring:message code='confirm_delete' />');"><input
+						type="button" value="Delete" class="btn-forwardscreen"></a>
 				</div>
 			</section>
 		</form>
+	</c:when>
+	<c:when test="${empty imageInfo.id}">
+		<section class="bg_white clearfix messageError center">
+			<div class="body clearfix mt20 manageUser" id="messageContainer">
+				<spring:message code="image_empty" text="default text" />
+			</div>
+			<div class="clearfix"></div>
+			<div id="sub_btn">
+				<a href="/EventMedia/upload"><input type="button"
+					value="Add Image" class="btn-forwardscreen"></a>
+			</div>
+		</section>
 	</c:when>
 </c:choose>

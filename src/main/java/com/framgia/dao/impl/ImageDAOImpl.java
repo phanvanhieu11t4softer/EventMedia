@@ -60,4 +60,15 @@ public class ImageDAOImpl extends AbstractDAO<Integer, Image> implements ImageDA
 		return (Long) crit.uniqueResult();
 	}
 
+	@Override
+	public Image findImage(String username) {
+		logger.info("Search group to update");
+		Criteria crit = getSession().createCriteria(Image.class);
+		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
+
+		crit.add(Restrictions.eq("userCreate", username));
+
+		return (Image) crit.uniqueResult();
+	}
+
 }
