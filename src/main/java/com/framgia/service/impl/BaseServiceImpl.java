@@ -4,6 +4,7 @@ import com.framgia.dao.GroupDAO;
 import com.framgia.dao.ImageDAO;
 import com.framgia.dao.PermissionDAO;
 import com.framgia.dao.UserDAO;
+import com.framgia.dao.VoteDAO;
 import com.framgia.service.BaseService;;
 
 /**
@@ -18,6 +19,7 @@ public class BaseServiceImpl implements BaseService {
 	protected PermissionDAO permissionDAO;
 	protected GroupDAO groupDAO;
 	protected ImageDAO imageDAO;
+	protected VoteDAO voteDAO;
 
 	public UserDAO getUserDAO() {
 		return userDAO;
@@ -49,6 +51,14 @@ public class BaseServiceImpl implements BaseService {
 
 	public void setImageDAO(ImageDAO imageDAO) {
 		this.imageDAO = imageDAO;
+	}
+
+	public VoteDAO getVoteDAO() {
+		return voteDAO;
+	}
+
+	public void setVoteDAO(VoteDAO voteDAO) {
+		this.voteDAO = voteDAO;
 	}
 
 }

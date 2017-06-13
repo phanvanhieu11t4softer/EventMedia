@@ -17,7 +17,7 @@
 			<column name="idGroup" not-null="true" />
 		</many-to-one>
 
-		<list name="vote" cascade="all" lazy="true" fetch="select"
+		<list name="vote" lazy="true" fetch="select"
 			inverse="true">
 			<key column="idImage" not-null="true" />
 			<list-index column="id" />

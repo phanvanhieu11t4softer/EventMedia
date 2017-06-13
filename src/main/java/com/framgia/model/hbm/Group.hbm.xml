@@ -24,14 +24,14 @@
 		<property name="userUpdate" column="USERUPDATE" />
 		<property name="dateUpdate" column="DATEUPDATE" />
 
-		<list name="image" cascade="all" lazy="true" fetch="select"
+		<list name="image" lazy="true" fetch="select"
 			inverse="true">
 			<key column="idGroup" not-null="true" />
 			<list-index column="id" />
 			<one-to-many class="Image" />
 		</list>
 
-		<list name="user" cascade="all" lazy="true" fetch="select"
+		<list name="user" lazy="true" fetch="select"
 			inverse="true">
 			<key column="idGroup" not-null="true" />
 			<list-index column="id" />

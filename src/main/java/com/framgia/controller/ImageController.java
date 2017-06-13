@@ -1,5 +1,6 @@
 package com.framgia.controller;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +24,7 @@ import com.framgia.bean.PagingImage;
 import com.framgia.service.ImageService;
 import com.framgia.util.Constants;
 import com.framgia.util.DateUtil;
+import com.framgia.util.Helpers;
 
 /**
  * 
@@ -39,12 +43,31 @@ public class ImageController {
 	public void initBinder(WebDataBinder webDataBinder) {
 		webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(DateUtil.getSimpleDateFormat(), true));
 	}
-	
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView initPage() {
 		logger.info("Init page image");
 		List<ImageInfo> listImage = imageService.getListImage(null, Constants.NUMBER_PAGE_DEFAULT);
+		ModelAndView mv = new ModelAndView("homeGuest", "image", listImage);
 
+		Integer noOfRecord = imageService.getNoOfRecord(null);
+		if (noOfRecord == null) {
+			mv.addObject("paging", null);
+			return mv;
+		}
+
+		PagingImage paging = new PagingImage(noOfRecord,
+		        (int) Math.ceil(noOfRecord * 1.0 / Constants.NUMBER_PAGE_LIMIT), 1, 2, 0);
+		mv.addObject("paging", paging);
+		mv.addObject("valueSearch", null);
+
+		return mv;
+	}
+	
+	@RequestMapping(value = {"/user", "/searchImage"}, method = RequestMethod.GET)
+	public ModelAndView initPageUser() {
+		logger.info("Init page image");
+		List<ImageInfo> listImage = imageService.getListImage(null, Constants.NUMBER_PAGE_DEFAULT);
 		ModelAndView mv = new ModelAndView("homeUser", "image", listImage);
 
 		Integer noOfRecord = imageService.getNoOfRecord(null);
@@ -82,5 +105,24 @@ public class ImageController {
 		model.addObject("paging", paging);
 		model.addObject("valueSearch", valueSearch);
 		return model;
+	}
+
+	@RequestMapping(value = "/user/vote/add/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean addVote(@PathVariable("id") Integer id) {
+		try {
+			
+			return imageService.addVote(id, Helpers.getIdUser());
+		} catch (ParseException e) {
+			return false;
+		}
+	}
+
+	@RequestMapping(value = "/user/vote/remove/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean removeVote(@PathVariable("id") Integer id) {
+
+		return imageService.remoteVote(id, Helpers.getIdUser());
+
 	}
 }
