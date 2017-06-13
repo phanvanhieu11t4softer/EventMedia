@@ -46,6 +46,7 @@
 						<h3 class="panel-title">Information group</h3>
 					</div>
 					<div id="divBtnEdit" class="head-right hidden_elem" style="float: right; with: 20%; margin-top: -4px;">
+						<a id="btnStatistical" target="_blank" href="#"><input type="button" value="Statistical" class="btn btn-default" hidden="true"></a>
 						<a id="btnDelete" href="#"><input type="button" value="Delete" class="btn btn-default"></a>
 						<input type="button" id="btnEdit" onclick="clickBtnEdit();" value="Edit" class="btn btn-default">
 						<input type="button" id="btnSave" onclick="clickBtnSave();" value="Save" class="btn btn-default">

@@ -1877,3 +1877,6 @@ button.btnScrUser {
 .pagging-image #totalPpage {
 	width: 25%;
 }
+.highcharts-credits {
+	display: none;
+}
