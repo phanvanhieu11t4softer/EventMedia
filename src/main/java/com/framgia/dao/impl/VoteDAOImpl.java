@@ -4,21 +4,14 @@ import org.hibernate.Criteria;
 import org.hibernate.LockMode;
 import org.hibernate.criterion.Restrictions;
 
-import com.framgia.dao.AbstractDAO;
+import com.framgia.dao.GenericDAO;
 import com.framgia.dao.VoteDAO;
 import com.framgia.model.Vote;
 
-public class VoteDAOImpl extends AbstractDAO<Integer, Vote> implements VoteDAO {
+public class VoteDAOImpl extends GenericDAO<Integer, Vote> implements VoteDAO {
 
-	@Override
-	public void create(Vote vote) {
-		logger.info("VoteDAO _ create vote");
-		saveOrUpdate(vote);
-	}
-	@Override
-	public void deleteVote(Vote vote) {
-		logger.info("VoteDAO _ delete vote");
-		delete(vote);
+	public VoteDAOImpl() {
+		super(Vote.class);
 	}
 
 	@Override

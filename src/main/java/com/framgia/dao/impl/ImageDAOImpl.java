@@ -10,14 +10,18 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import com.framgia.dao.AbstractDAO;
+import com.framgia.dao.GenericDAO;
 import com.framgia.dao.ImageDAO;
 import com.framgia.model.Image;
 import com.framgia.util.Constants;
 
-public class ImageDAOImpl extends AbstractDAO<Integer, Image> implements ImageDAO {
+public class ImageDAOImpl extends GenericDAO<Integer, Image> implements ImageDAO {
 
 	private static final Logger logger = Logger.getLogger(ImageDAOImpl.class);
+
+	public ImageDAOImpl() {
+		super(Image.class);
+	}
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -33,12 +37,6 @@ public class ImageDAOImpl extends AbstractDAO<Integer, Image> implements ImageDA
 		}
 
 		return (Image) crit.uniqueResult();
-	}
-
-	@Override
-	public void update(Image image) {
-		logger.info("Update iamge");
-		saveOrUpdate(image);
 	}
 
 	@Override
