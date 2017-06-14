@@ -144,7 +144,7 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 		try {
 
 			// remove all user in group: user.idGroup = null
-			for (User item : group.getUser()) {
+			for (User item : group.getUsers()) {
 				if (item == null)
 					continue;
 
@@ -179,11 +179,11 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 		}
 
 		List<String> content = new ArrayList<String>();
-		for (Image item : group.getImage()) {
+		for (Image item : group.getImages()) {
 			if (item == null)
 				continue;
 			int count = 0;
-			for (Vote vote : item.getVote()) {
+			for (Vote vote : item.getVotes()) {
 				if (vote != null) {
 					count++;
 				}
