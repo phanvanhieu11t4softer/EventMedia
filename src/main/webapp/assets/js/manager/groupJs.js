@@ -1,6 +1,6 @@
 // init
 var frmName, frmDescription, frmDateStart, frmDateEnd, frmNote, frmStatus, frmType;
-
+var stompClient = null;
 // Go to top page
 function goTopPage() {
 	$('html,body').animate({
@@ -177,6 +177,8 @@ function getGroup() {
 	    	$(".manageUser").hide();
 	    }
 	});
+	
+	connect();
 }
 
 // edit
@@ -565,3 +567,66 @@ function clickAcceptUser(id, idGroup, el) {
 	});
 
 }
+
+function connect() {
+	if (stompClient != null) {
+		stompClient.disconnect();
+	}
+	//setConnected(false);
+	console.log("Disconnected");
+	var socket = new SockJS('/EventMedia/request');
+	stompClient = Stomp.over(socket);
+	stompClient.connect({}, function(frame) {
+		//setConnected(true);
+		console.log('Connected: ' + frame);
+		stompClient.subscribe('/topic/notification', function(greeting) {
+			var message = greeting.body;
+			showGreeting(message);
+		});
+	});
+}
+
+function showGreeting(message) {
+	$('#text').text(message);
+    marquee($('#display'), $('#text'));  //Enter name of container element & marquee element
+}
+
+function marquee(a, b) {
+    var width = b.width();
+    var start_pos = a.width();
+    var end_pos = -width;
+    function scroll() {
+        if (b.position().left <= -width) {
+            b.css('left', start_pos);
+            scroll();
+        }
+        else {
+            time = (parseInt(b.position().left, 10) - end_pos) *
+                (5000 / (start_pos - end_pos)); // Increase or decrease speed by changing value 10000
+            b.animate({
+                'left': -width
+                
+            }, time, 'linear', function() {
+               // scroll();
+               // e.style.display = 'block';
+            });
+        }
+    }
+
+    b.css({
+        'width': width,
+        'left': start_pos
+    });
+    scroll(a, b);
+    
+    b.mouseenter(function() {     // Remove these lines
+        b.stop();                 //
+        b.clearQueue();           // if you don't want
+    });                           //
+    b.mouseleave(function() {     // marquee to pause
+        scroll(a, b);             //
+    });                           // on mouse over
+    
+}
+
+

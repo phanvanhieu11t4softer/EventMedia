@@ -11,4 +11,7 @@ public interface GroupService extends BaseService {
 	public boolean updateGroup(GroupInfo groupInfo);
 
 	public boolean deleteLogicGroup(Integer id);
+
+	public String getNotification(Integer idUser);
+
 }

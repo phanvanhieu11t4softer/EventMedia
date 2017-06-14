@@ -192,6 +192,9 @@
 			<add-attribute value="/assets/js/bootstrap.min.js" />
 			<add-attribute value="/assets/js/jquery.dataTables.min.js" />
 			<add-attribute value="/assets/js/jquery.validate.min.js" />
+			<add-attribute value="/assets/js/sockjs.js" />
+			<add-attribute value="/assets/js/sockjs.min.js" />
+			<add-attribute value="/assets/js/stomp.min.js" />
 		</put-list-attribute>
 		<put-list-attribute name="jsAdd">
 			<add-attribute value="/assets/js/calendar/jquery-ui.js" />

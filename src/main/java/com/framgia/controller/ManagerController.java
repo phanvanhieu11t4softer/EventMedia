@@ -8,6 +8,14 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,9 +44,13 @@ import com.framgia.util.Helpers;
  * 
  */
 @RestController
+@Component
+@EnableScheduling
 public class ManagerController {
 
 	private static final Logger logger = Logger.getLogger(ManagerController.class);
+	
+	private Integer idUser;
 
 	@Autowired
 	GroupService groupService;
@@ -49,6 +61,9 @@ public class ManagerController {
 	@Autowired
 	ImageService imageService;
 
+	@Autowired
+	private SimpMessagingTemplate template;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
 		webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(DateUtil.getSimpleDateFormat(), true));
@@ -66,7 +81,7 @@ public class ManagerController {
 		groupInfo.setType(Constants.GROUP_TYPE_CODE_PRIVATE);
 		groupInfo.setDateStart(null);
 		groupInfo.setDateEnd(null);
-
+		idUser = Helpers.getIdUser();
 		return new ModelAndView("initGroup", "group", groupInfo);
 	}
 
@@ -151,5 +166,33 @@ public class ManagerController {
 
 		return mv;
 	}
+	
+	//TODO Scheduled notification 
+	@Scheduled(cron="*/10 * * * * *", zone="Asia/Saigon")
+	public void notificationGroup() {
+		
+		//TODO get information user login in Security 
+		String username = getUserName();
+		
+		//TODO username is empty
+		logger.info("Notification group " + username);
+		
+		String notification = groupService.getNotification(idUser);
+		if(notification != null){
+			this.template.convertAndSend("/topic/notification", notification);
+		}
+	}
+	
+	//TODO get infomation in SecurityContextHolder
+	public String getUserName() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			UserDetails userDetail = (UserDetails) auth.getPrincipal();
+			logger.info("username: " + userDetail.getUsername());
 
+			return userDetail.getUsername();
+		} else {
+			return null;
+		}
+	}
 }

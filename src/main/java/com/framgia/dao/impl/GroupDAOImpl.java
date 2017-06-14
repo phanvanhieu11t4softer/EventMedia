@@ -96,4 +96,15 @@ public class GroupDAOImpl extends AbstractDAO<Integer, Group> implements GroupDA
 		
 		return (Long) crit.uniqueResult(); 
 	}
+
+	@Override
+	public Group findByIdUser(Integer idUser) {
+		logger.info("Search group to update");
+		Criteria crit = getSession().createCriteria(Group.class);
+		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
+
+		crit.add(Restrictions.eq("userCreate.id", idUser));
+
+		return (Group) crit.uniqueResult();
+	}
 }

@@ -1877,3 +1877,21 @@ button.btnScrUser {
 .pagging-image #totalPpage {
 	width: 25%;
 }
+
+*{margin:0; padding:0;}
+#display{
+  background:hsl(0, 0%, 100%);
+  height:60px;
+  width:100%;
+  overflow:hidden;
+  position:relative;
+}
+#text{
+  background:hsla(90,100%,50%,.5);
+  cursor:pointer;
+  overflow:hidden;
+  position:absolute;
+  left:10px;
+  margin-right:10px;
+  top:10px;
+}

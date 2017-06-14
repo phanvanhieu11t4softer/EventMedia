@@ -18,4 +18,6 @@ public interface GroupDAO {
 	public List<Group> findByConditon(ConditionGroupBean conditionGroupBean);
 
 	public Long getCountType(Integer type, Integer status, String deleteFlag);
+
+	public Group findByIdUser(Integer idUser);
 }

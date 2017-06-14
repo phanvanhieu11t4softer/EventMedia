@@ -3,6 +3,7 @@ package com.framgia.service.impl;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.framgia.bean.GroupInfo;
 import com.framgia.model.Group;
@@ -144,7 +145,7 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 					continue;
 
 				if (item.getPermission().getId().equals(Constants.PERMISSION_CODE_MANAGER)
-				        && group.getDeleteFlag().equals(Constants.DEL_FLG))
+						&& group.getDeleteFlag().equals(Constants.DEL_FLG))
 					continue;
 
 				User user = getUserDAO().findById(item.getId(), true);
@@ -164,6 +165,30 @@ public class GroupServiceImpl extends BaseServiceImpl implements GroupService {
 			logger.error("remove all user in group", e);
 		}
 		return false;
+	}
+
+	@Override
+	public String getNotification(Integer id) {
+		try {
+			Group group = groupDAO.findByIdUser(id);
+			if (group == null) {
+				return null;
+			}
+			Date dateEnd = group.getDateEnd();
+			Date systemDate = DateUtil.getDateNow();
+			if (dateEnd.before(systemDate)) {
+				return "The group expired on the " + DateUtil.convertDatetoString(dateEnd);
+			} else {
+				long diff = Math.abs(dateEnd.getTime() - systemDate.getTime());
+				long diffDays = diff / (24 * 60 * 60 * 1000);
+				return "The rest of the time is " + diffDays + ". Expiry date " + DateUtil.convertDatetoString(dateEnd);
+			}
+
+		} catch (Exception e) {
+			logger.error("remove all user in group", e);
+		}
+
+		return null;
 	}
 
 }
