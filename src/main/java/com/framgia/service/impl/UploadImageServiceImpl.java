@@ -3,15 +3,13 @@ package com.framgia.service.impl;
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.Transformation;
 import com.framgia.bean.FileFormInfo;
 import com.framgia.bean.GroupInfo;
 import com.framgia.bean.ImageInfo;
 import com.framgia.model.Group;
 import com.framgia.model.Image;
 import com.framgia.model.User;
-import com.framgia.service.FileUploadService;
+import com.framgia.service.UploadImageService;
 import com.framgia.util.Constants;
 import com.framgia.util.ConvetBeanAndModel;
 import com.framgia.util.DateUtil;
@@ -23,38 +21,40 @@ import com.framgia.util.FileUtil;
  *
  */
 @SuppressWarnings("serial")
-public class FileUploadServiceImpl extends BaseServiceImpl implements FileUploadService {
+public class UploadImageServiceImpl extends BaseServiceImpl implements UploadImageService {
 
-	private static final Logger logger = Logger.getLogger(FileUploadServiceImpl.class);
+	private static final Logger logger = Logger.getLogger(UploadImageServiceImpl.class);
 
 	@Override
 	public Integer uploadImage(FileFormInfo dataImportBean, String username) {
-
-		logger.info("Upload Image");
-		Cloudinary cloudinary = FileUtil.getCloudinaryClient();
-
-		MultipartFile multipartFile = dataImportBean.getFileImport();
-
 		try {
+			logger.info("Upload Image");
+
+			MultipartFile multipartFile = dataImportBean.getFileImport();
+			String url = null;
+
 			// Check user upload image
 			if (imageDAO.findByUserCreate(username) > 0) {
 				return -1;
 			}
 			if (multipartFile != null) {
-				FileUtil.uploadToCloudinary(cloudinary, multipartFile);
+				url = FileUtil.uploadImage(multipartFile);
 			}
 
-			String url = cloudinary.url().format("jpg")
-					.transformation(new Transformation().width(650).height(400).crop("fit"))
-					.generate(Constants.PATH_UPLOAD + multipartFile.getOriginalFilename().split("\\.", 3)[0]);
-
-			User user = userDAO.findByUserName(username);
+			// Check error upload file
+			if (url == null) {
+				return null;
+			}
 
 			// Get Group
+			User user = userDAO.findByUserName(username);
 			Group dataGroup = groupDAO.findById(user.getIdGroup(), false);
+			
+			// Check data findById group
 			if (dataGroup == null) {
 				return null;
 			}
+
 			// Define Image
 			Image image = new Image();
 			image.setGroup(dataGroup);
@@ -73,9 +73,8 @@ public class FileUploadServiceImpl extends BaseServiceImpl implements FileUpload
 			return image.getId();
 		} catch (Exception e) {
 			logger.info("Exception at function uploadImage in FileUploadServiceImpl: ", e);
+			throw e;
 		}
-
-		return null;
 	}
 
 	@Override
@@ -92,7 +91,7 @@ public class FileUploadServiceImpl extends BaseServiceImpl implements FileUpload
 		GroupInfo group = new GroupInfo();
 		group.setName(image.getGroup().getName());
 		imageInfo.setGroup(group);
-		
+
 		// Return data
 		return imageInfo;
 

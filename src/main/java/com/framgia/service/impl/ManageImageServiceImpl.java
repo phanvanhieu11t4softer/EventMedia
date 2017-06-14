@@ -3,8 +3,6 @@ package com.framgia.service.impl;
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.Transformation;
 import com.framgia.bean.FileFormInfo;
 import com.framgia.bean.GroupInfo;
 import com.framgia.bean.ImageInfo;
@@ -31,7 +29,7 @@ public class ManageImageServiceImpl extends BaseServiceImpl implements ManageIma
 		logger.info("get data Image");
 
 		Image image = imageDAO.findImage(username);
-		if(image == null){
+		if (image == null) {
 			return null;
 		}
 		// Convert data ImageInfo
@@ -54,18 +52,14 @@ public class ManageImageServiceImpl extends BaseServiceImpl implements ManageIma
 			}
 			if (!dataImportBean.getUrl().equals(dataImportBean.getFileName())) {
 				logger.info("Upload Image");
-				Cloudinary cloudinary = FileUtil.getCloudinaryClient();
 
 				MultipartFile multipartFile = dataImportBean.getFileImport();
+				String url = null;
 
 				// Check user upload image
 				if (multipartFile != null) {
-					FileUtil.uploadToCloudinary(cloudinary, multipartFile);
+					url = FileUtil.uploadImage(multipartFile);
 				}
-
-				String url = cloudinary.url().format("jpg")
-						.transformation(new Transformation().width(650).height(400).crop("fit"))
-						.generate(Constants.PATH_UPLOAD + multipartFile.getOriginalFilename().split("\\.", 3)[0]);
 
 				image.setUrl(url);
 
@@ -84,9 +78,8 @@ public class ManageImageServiceImpl extends BaseServiceImpl implements ManageIma
 
 		} catch (Exception e) {
 			logger.info("Exception at function uploadImage in FileUploadServiceImpl: ", e);
+			throw e;
 		}
-
-		return false;
 	}
 
 	@Override
@@ -108,8 +101,8 @@ public class ManageImageServiceImpl extends BaseServiceImpl implements ManageIma
 
 		} catch (Exception e) {
 			logger.error("Error delete logic Image: ", e);
+			throw e;
 		}
-		return null;
 	}
 
 }

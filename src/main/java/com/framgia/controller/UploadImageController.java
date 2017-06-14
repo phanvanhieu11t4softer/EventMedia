@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.framgia.bean.FileFormInfo;
 import com.framgia.bean.ImageInfo;
-import com.framgia.service.FileUploadService;
+import com.framgia.service.UploadImageService;
 import com.framgia.util.Helpers;
 
 /**
@@ -24,13 +24,13 @@ import com.framgia.util.Helpers;
  *
  */
 @RestController
-public class FileUploadController {
+public class UploadImageController {
 
 	@Autowired
-	FileUploadService fileUploadService;
+	UploadImageService fileUploadService;
 
 	// Log
-	private static final Logger logger = Logger.getLogger(FileUploadController.class);
+	private static final Logger logger = Logger.getLogger(UploadImageController.class);
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public ModelAndView loginPage() {

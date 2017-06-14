@@ -12,7 +12,7 @@ import com.framgia.bean.ImageInfo;
  * @author phan.van.hieu@framgia.com
  * 
  */
-public interface FileUploadService extends BaseService {
+public interface UploadImageService extends BaseService {
 
 	Integer uploadImage(FileFormInfo dataImportBean, String username);
 
