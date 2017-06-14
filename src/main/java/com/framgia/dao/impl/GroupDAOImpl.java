@@ -9,15 +9,19 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.bean.ConditionGroupBean;
-import com.framgia.dao.AbstractDAO;
+import com.framgia.dao.GenericDAO;
 import com.framgia.dao.GroupDAO;
 import com.framgia.model.Group;
 import com.framgia.util.Constants;
 import com.framgia.util.Helpers;
 
-public class GroupDAOImpl extends AbstractDAO<Integer, Group> implements GroupDAO {
+public class GroupDAOImpl extends GenericDAO<Integer, Group> implements GroupDAO {
 
 	private static final Logger logger = Logger.getLogger(GroupDAOImpl.class);
+
+	public GroupDAOImpl() {
+		super(Group.class);
+	}
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -35,19 +39,6 @@ public class GroupDAOImpl extends AbstractDAO<Integer, Group> implements GroupDA
 		return (Group) crit.uniqueResult();
 	}
 
-	@Override
-	public void updateGroup(Group group) {
-		logger.info("Update Group");
-		saveOrUpdate(group);
-	}
-
-	@Override
-	public Group create(Group group) {
-		logger.info("Create Group");
-		saveOrUpdate(group);
-		return group;
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Group> findByGroupType(Integer groupType) {
@@ -58,7 +49,7 @@ public class GroupDAOImpl extends AbstractDAO<Integer, Group> implements GroupDA
 
 		return crit.list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Group> findByConditon(ConditionGroupBean conditionGroupBean) {
@@ -93,7 +84,7 @@ public class GroupDAOImpl extends AbstractDAO<Integer, Group> implements GroupDA
 			crit.add(Restrictions.eq("deleteFlag", deleteFlag));
 		}
 		crit.setProjection(Projections.rowCount());
-		
-		return (Long) crit.uniqueResult(); 
+
+		return (Long) crit.uniqueResult();
 	}
 }

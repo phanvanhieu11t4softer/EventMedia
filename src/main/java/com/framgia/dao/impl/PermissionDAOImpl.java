@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
-import com.framgia.dao.AbstractDAO;
+import com.framgia.dao.GenericDAO;
 import com.framgia.dao.PermissionDAO;
 import com.framgia.model.Permission;
 import com.framgia.util.Constants;
@@ -17,10 +17,14 @@ import com.framgia.util.Constants;
  * @version 19/04/2017
  * @author vu.thi.tran.van@framgia.com
  */
-public class PermissionDAOImpl extends AbstractDAO<Integer, Permission> implements PermissionDAO {
+public class PermissionDAOImpl extends GenericDAO<Integer, Permission> implements PermissionDAO {
 
 	// log
 	private static final Logger logger = Logger.getLogger(PermissionDAOImpl.class);
+
+	public PermissionDAOImpl() {
+		super(Permission.class);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

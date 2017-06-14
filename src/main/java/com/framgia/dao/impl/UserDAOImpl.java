@@ -9,7 +9,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.bean.ConditionUserBean;
-import com.framgia.dao.AbstractDAO;
+import com.framgia.dao.GenericDAO;
 import com.framgia.dao.UserDAO;
 import com.framgia.model.User;
 import com.framgia.util.Constants;
@@ -21,9 +21,13 @@ import com.framgia.util.Helpers;
  * @author vu.thi.tran.van@framgia.com
  * 
  */
-public class UserDAOImpl extends AbstractDAO<Integer, User> implements UserDAO {
+public class UserDAOImpl extends GenericDAO<Integer, User> implements UserDAO {
 
 	private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
+
+	public UserDAOImpl() {
+		super(User.class);
+	}
 
 	@Override
 	public User findByUserName(String username) {
@@ -34,18 +38,6 @@ public class UserDAOImpl extends AbstractDAO<Integer, User> implements UserDAO {
 		crit.add(Restrictions.eq("username", username));
 		user = (User) crit.uniqueResult();
 		return user;
-	}
-
-	@Override
-	public void create(User user) {
-		logger.info("UserDAO _ createUser");
-		saveOrUpdate(user);
-	}
-
-	@Override
-	public void update(User user) {
-		logger.info("UserDAO _ updateUser");
-		saveOrUpdate(user);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -86,7 +78,7 @@ public class UserDAOImpl extends AbstractDAO<Integer, User> implements UserDAO {
 		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
 		crit.add(Restrictions.eq("idGroup", id));
 		crit.setProjection(Projections.rowCount());
-		return (Long) crit.uniqueResult(); 
+		return (Long) crit.uniqueResult();
 
 	}
 
