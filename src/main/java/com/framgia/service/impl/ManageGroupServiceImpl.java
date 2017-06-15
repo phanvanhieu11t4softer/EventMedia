@@ -1,6 +1,7 @@
 package com.framgia.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,6 +10,8 @@ import com.framgia.bean.ConditionGroupBean;
 import com.framgia.bean.GroupInfo;
 import com.framgia.bean.StatisticalInfo;
 import com.framgia.model.Group;
+import com.framgia.model.Permission;
+import com.framgia.model.User;
 import com.framgia.service.ManageGroupService;
 import com.framgia.util.Constants;
 import com.framgia.util.ConvetBeanAndModel;
@@ -80,6 +83,26 @@ public class ManageGroupServiceImpl extends BaseServiceImpl implements ManageGro
 				group.setDateUpdate(DateUtil.getDateNow());
 
 				groupDAO.saveOrUpdate(group);
+				
+				for (User item : group.getUsers()) {
+					if (item == null)
+						continue;
+
+					if (item.getPermission().getId().equals(Constants.PERMISSION_CODE_MANAGER)
+					        && group.getDeleteFlag().equals(Constants.DEL_FLG))
+						continue;
+
+					User user = getUserDAO().findById(item.getId(), true);
+					user.setIdGroup(null);
+					user.setStatusJoin(Constants.STATUSJOIN_CODE_FREE);
+					user.setDateUpdate(DateUtil.getDateNow());
+					user.setUserUpdate(userName);
+
+					if (group.getDeleteFlag() == Constants.DEL_FLG_DEL)
+						user.setPermission(new Permission(Constants.PERMISSION_CODE_USER));
+
+					userDAO.saveOrUpdate(user);
+				}
 			}
 
 			return true;
@@ -152,6 +175,57 @@ public class ManageGroupServiceImpl extends BaseServiceImpl implements ManageGro
 			logger.error("Exception at function getStatisticalInfo in ManageGroupServiceImpl: ", e);
 		}
 		return null;
+	}
+
+	@Override
+	public void backgroundJobDeleteGroup() {
+		try {
+			List<Group> groups = groupDAO.getListGroup();
+
+			logger.info("background auto delete ground expired");
+			if (groups != null) {
+
+				// Define systemDate
+				Date systemDate = DateUtil.getDateNow();
+
+				for (Group group : groups) {
+					if (group.getDateEnd().before(systemDate)) {
+						Group dataGroup = groupDAO.findById(group.getId(), true);
+						if (dataGroup != null) {
+							dataGroup.setDeleteFlag(Constants.DEL_FLG_DEL);
+							dataGroup.setUserUpdate(Constants.NAME_SYSTEM);
+							dataGroup.setDateUpdate(DateUtil.getDateNow());
+
+							// Delete group
+							groupDAO.saveOrUpdate(dataGroup);
+							
+							for (User item : dataGroup.getUsers()) {
+								if (item == null)
+									continue;
+
+								if (item.getPermission().getId().equals(Constants.PERMISSION_CODE_MANAGER)
+								        && group.getDeleteFlag().equals(Constants.DEL_FLG))
+									continue;
+
+								User user = getUserDAO().findById(item.getId(), true);
+								user.setIdGroup(null);
+								user.setStatusJoin(Constants.STATUSJOIN_CODE_FREE);
+								user.setDateUpdate(DateUtil.getDateNow());
+								user.setUserUpdate(Constants.NAME_SYSTEM);
+
+								if (group.getDeleteFlag() == Constants.DEL_FLG_DEL)
+									user.setPermission(new Permission(Constants.PERMISSION_CODE_USER));
+
+								userDAO.saveOrUpdate(user);
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			logger.error("Exception at function backgroundJobDeleteGroup in ManageGroupServiceImpl: ", e);
+			throw e;
+		}
 	}
 
 }

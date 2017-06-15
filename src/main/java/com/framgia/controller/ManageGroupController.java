@@ -6,10 +6,13 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,6 +37,8 @@ import com.framgia.util.DateUtil;
  * @author phan.van.hieu@framgia.com
  */
 @RestController
+@EnableScheduling
+@Component
 public class ManageGroupController {
 
 	// log
@@ -106,5 +111,16 @@ public class ManageGroupController {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Backgroud job auto delete group expired
+	 */
+	@Scheduled(cron = "0 0 1 * * *", zone = "Asia/Saigon")
+	public void writeCurrentTime() {
+
+		logger.info("Call background job");
+		// Call service manage groud
+		manageGroupService.backgroundJobDeleteGroup();
 	}
 }

@@ -87,4 +87,13 @@ public class GroupDAOImpl extends GenericDAO<Integer, Group> implements GroupDAO
 
 		return (Long) crit.uniqueResult();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Group> getListGroup() {
+		Criteria crit = getSession().createCriteria(Group.class);
+		crit.add(Restrictions.eq("deleteFlag", Constants.DEL_FLG));
+
+		return crit.list();
+	}
 }

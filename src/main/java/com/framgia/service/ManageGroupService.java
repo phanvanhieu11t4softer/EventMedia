@@ -23,4 +23,6 @@ public interface ManageGroupService extends BaseService {
 
 	StatisticalInfo getStatisticalInfo(Integer typeStatictical);
 
+	void backgroundJobDeleteGroup();
+
 }

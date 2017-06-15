@@ -61,4 +61,7 @@ public interface Constants {
 	
 	// path
 	public static String PATH_UPLOAD = "mm_images/profile/";
+	
+	// Name System
+	public static String NAME_SYSTEM = "System";
 }

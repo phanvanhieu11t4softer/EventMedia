@@ -158,6 +158,26 @@ public class ManageUserServiceImpl extends BaseServiceImpl implements ManageUser
 					group.setDateUpdate(DateUtil.getDateNow());
 
 					groupDAO.saveOrUpdate(group);
+					
+					for (User item : group.getUsers()) {
+						if (item == null)
+							continue;
+
+						if (item.getPermission().getId().equals(Constants.PERMISSION_CODE_MANAGER)
+						        && group.getDeleteFlag().equals(Constants.DEL_FLG))
+							continue;
+
+						User user = getUserDAO().findById(item.getId(), true);
+						user.setIdGroup(null);
+						user.setStatusJoin(Constants.STATUSJOIN_CODE_FREE);
+						user.setDateUpdate(DateUtil.getDateNow());
+						user.setUserUpdate(userName);
+
+						if (group.getDeleteFlag() == Constants.DEL_FLG_DEL)
+							user.setPermission(new Permission(Constants.PERMISSION_CODE_USER));
+
+						userDAO.saveOrUpdate(user);
+					}
 				}
 			}
 
