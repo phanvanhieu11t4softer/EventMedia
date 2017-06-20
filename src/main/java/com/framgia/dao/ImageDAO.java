@@ -17,4 +17,10 @@ public interface ImageDAO extends IGenericDAO<Integer, Image> {
 	List<Image> getListImage(String condition, int first, int max);
 
 	Integer getNoOfRecord(String condition);
+
+	Long count(String string, String string2);
+
+	List<Image> findListImage(int idGroup, int i, int numberPageLimit);
+
+	Integer getNumberRecord(Integer i);
 }

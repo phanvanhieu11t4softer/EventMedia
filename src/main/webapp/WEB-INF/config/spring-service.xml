@@ -61,10 +61,20 @@
 			</bean>
 		</property>
 	</bean>
-	
+
 	<bean id="ManageImageService" parent="transactionProxyTemplate">
 		<property name="target">
 			<bean class="com.framgia.service.impl.ManageImageServiceImpl">
+				<property name="imageDAO" ref="ImageDAO"></property>
+				<property name="userDAO" ref="UserDAO"></property>
+				<property name="groupDAO" ref="GroupDAO"></property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="ManageCrawlerImageService" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="com.framgia.service.impl.ManageCrawlerImageServiceImpl">
 				<property name="imageDAO" ref="ImageDAO"></property>
 				<property name="userDAO" ref="UserDAO"></property>
 				<property name="groupDAO" ref="GroupDAO"></property>
