@@ -94,6 +94,8 @@
 			type="button" value="BACK HOME" class="btn-forwardscreen"></a>
 			<a href="/EventMedia/statictical" class="btn btn-detail"><input
 			type="button" value="STATICTICAL" class="btn-forwardscreen"></a>
+			<a href="/EventMedia/export" class="btn btn-detail"><input
+			type="button" value="EXPORT" class="btn-forwardscreen"></a>
 	</div>
 </section>
 

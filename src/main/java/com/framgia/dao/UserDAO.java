@@ -14,4 +14,6 @@ public interface UserDAO extends IGenericDAO<Integer, User> {
 	User findById(Integer id, boolean isLock);
 
 	Long getCountUser(Integer id);
+
+	List<User> getListUser();
 }

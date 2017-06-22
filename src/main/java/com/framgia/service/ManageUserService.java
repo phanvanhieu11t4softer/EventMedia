@@ -2,6 +2,10 @@ package com.framgia.service;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.framgia.bean.ConditionUserBean;
 import com.framgia.bean.PermissionInfo;
 import com.framgia.bean.StatisticalInfo;
@@ -25,5 +29,7 @@ public interface ManageUserService extends BaseService {
 	Boolean deleteUser(Integer idUser, String userName);
 
 	StatisticalInfo getStatisticalInfo(Integer groupType);
+
+	void exportUser(HttpServletRequest request, HttpServletResponse response, ServletContext context);
 
 }

@@ -1,9 +1,20 @@
 package com.framgia.controller;
 
+import java.io.FileInputStream;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -28,6 +39,8 @@ import com.framgia.bean.UserInfo;
 import com.framgia.service.ManageUserService;
 import com.framgia.util.DateUtil;
 
+import net.sf.jxls.transformer.XLSTransformer;
+
 /**
  * ManagementUsersController.java
  * 
@@ -42,6 +55,9 @@ public class ManageUserController {
 
 	@Autowired
 	ManageUserService manageUserService;
+
+	@Autowired
+	private ServletContext context;
 
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -113,5 +129,11 @@ public class ManageUserController {
 		} else {
 			return null;
 		}
+	}
+
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public String export(HttpServletRequest request, HttpServletResponse response) {
+		manageUserService.exportUser(request, response, context);
+		return null;
 	}
 }

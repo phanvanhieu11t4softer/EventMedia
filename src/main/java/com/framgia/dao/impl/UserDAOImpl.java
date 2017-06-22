@@ -82,4 +82,12 @@ public class UserDAOImpl extends GenericDAO<Integer, User> implements UserDAO {
 
 	}
 
+	@Override
+	public List<User> getListUser() {
+		
+		logger.info("Search list user.");
+		Criteria criterion = getSession().createCriteria(User.class);
+		return criterion.list();
+	}
+
 }

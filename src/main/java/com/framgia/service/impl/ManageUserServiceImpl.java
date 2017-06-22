@@ -1,9 +1,18 @@
 package com.framgia.service.impl;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.framgia.bean.ConditionUserBean;
 import com.framgia.bean.PermissionInfo;
@@ -16,6 +25,8 @@ import com.framgia.service.ManageUserService;
 import com.framgia.util.Constants;
 import com.framgia.util.DateUtil;
 import com.framgia.util.Helpers;
+
+import net.sf.jxls.transformer.XLSTransformer;
 
 /**
  * ManagementUsersServiceImpl.java
@@ -206,6 +217,105 @@ public class ManageUserServiceImpl extends BaseServiceImpl implements ManageUser
 			logger.error("Exception at function getStatisticalInfo in ManageUserServiceImpl: ", e);
 		}
 		return null;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public void exportUser(HttpServletRequest request, HttpServletResponse response, ServletContext context) {
+		try {
+
+			// set output header
+			ServletOutputStream os = response.getOutputStream();
+			response.setContentType(Constants.FORMAT_FILE);
+			response.setHeader(Constants.HEADER, Constants.HEADER_FILE);
+
+			// Path container file excel
+			String reportLocation = context.getRealPath(Constants.PATH);
+
+			// List data export
+			List idUser = new ArrayList();
+			List permission = new ArrayList();
+			List username = new ArrayList();
+			List name = new ArrayList();
+			List gender = new ArrayList();
+			List birthday = new ArrayList();
+			List phone = new ArrayList();
+			List email = new ArrayList();
+			List statusJoin = new ArrayList();
+			List group = new ArrayList();
+			List deleteFlag = new ArrayList();
+			List dateCreate = new ArrayList();
+			List userCreate = new ArrayList();
+			List dateUpdate = new ArrayList();
+			List userUpdate = new ArrayList();
+
+			// Get list user
+			List<User> users = userDAO.getListUser();
+
+			// Get information user
+			for (User user : users) {
+				idUser.add(user.getId());
+				permission.add(user.getPermission().getName());
+				username.add(user.getUsername());
+				name.add(user.getName());
+				if (Constants.GENDER_CODE_FMALE.equals(user.getGender())) {
+					gender.add(Constants.GENDER_VALUE_FMALE);
+				} else {
+					gender.add(Constants.GENDER_VALUE_MALE);
+				}
+				birthday.add(user.getBirthday());
+				phone.add(user.getPhone());
+				email.add(user.getEmail());
+
+				if (Constants.STATUSJOIN_CODE_FREE.equals(user.getStatusJoin())) {
+					statusJoin.add(Constants.STATUSJOIN_VALUE_FREE);
+				} else if (Constants.STATUSJOIN_CODE_APPOVE.equals(user.getStatusJoin())) {
+					statusJoin.add(Constants.STATUSJOIN_VALUE_APPOVE);
+				} else {
+					statusJoin.add(Constants.STATUSJOIN_VALUE_REQUEST);
+				}
+				if (user.getIdGroup() != null) {
+					Group dataGroup = groupDAO.findById(user.getIdGroup(), false);
+					if (dataGroup != null) {
+						group.add(dataGroup.getName());
+					}
+				} else {
+					group.add(null);
+				}
+				deleteFlag.add(user.getDeleteFlag());
+				dateCreate.add(DateUtil.convertDateTimetoString(user.getDateUpdate()));
+				userCreate.add(user.getUserCreate());
+				dateUpdate.add(DateUtil.convertDateTimetoString(user.getDateUpdate()));
+				userUpdate.add(user.getUserUpdate());
+			}
+
+			Map beans = new HashMap();
+			beans.put("id", idUser);
+			beans.put("permission", permission);
+			beans.put("username", username);
+			beans.put("fullname", name);
+			beans.put("gender", gender);
+			beans.put("birthday", birthday);
+			beans.put("phone", phone);
+			beans.put("email", email);
+			beans.put("statusjoin", statusJoin);
+			beans.put("group", group);
+			beans.put("deleteflag", deleteFlag);
+			beans.put("datecreate", dateCreate);
+			beans.put("usercreate", userCreate);
+			beans.put("dateupdate", dateUpdate);
+			beans.put("userupdate", userUpdate);
+
+			// Write file excel
+			XLSTransformer transformer = new XLSTransformer();
+			HSSFWorkbook workbook = transformer.transformXLS(new FileInputStream(reportLocation + Constants.FILE_NAME),
+					beans);
+			workbook.write(os);
+			os.flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
